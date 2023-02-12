@@ -5,6 +5,8 @@ import axios from "axios";
 import { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from '../context/Context';
 import './home.css'
+import { Routes, Route, Link, Navigate } from "react-router-dom";
+
 
 
 function Home() {
@@ -148,62 +150,10 @@ function Home() {
 
 
   return (
-    <div>
-      {/* <form onSubmit={myFormik.handleSubmit}>
-        <input
-          id="productName"
-          placeholder="Product Name"
-          value={myFormik.values.productName}
-          onChange={myFormik.handleChange}
-        />
-        {
-          (myFormik.touched.productName && Boolean(myFormik.errors.productName)) ?
-            <span style={{ color: "red" }}>{myFormik.errors.productName}</span>
-            :
-            null
-        }
-
-        <br />
-        <input
-          id="productPrice"
-          placeholder="Product Price"
-          value={myFormik.values.productPrice}
-          onChange={myFormik.handleChange}
-        />
-        {
-          (myFormik.touched.productPrice && Boolean(myFormik.errors.productPrice)) ?
-            <span style={{ color: "red" }}>{myFormik.errors.productPrice}</span>
-            :
-            null
-        }
-
-        <br />
-        <input
-          id="productDescription"
-          placeholder="Product Description"
-          value={myFormik.values.productDescription}
-          onChange={myFormik.handleChange}
-        />
-        {
-          (myFormik.touched.productDescription && Boolean(myFormik.errors.productDescription)) ?
-            <span style={{ color: "red" }}>{myFormik.errors.productDescription}</span>
-            :
-            null
-        }
-
-        <br />
-        <button type="submit"> Submit </button>
-      </form> */}
-
-      <br />
-      <br />
-
-
-      <div >
+    <div className='all-post'>
         {products.map((eachProduct, i) => (
-          <div key={eachProduct._id} style={{ border: "1px solid black", padding: 10, margin: 10, borderRadius: 15 }}>
+          <div key={eachProduct._id} className="post">
             <h2>{eachProduct.name}</h2>
-            {/* <p>{eachProduct._id}</p> */}
             <h5 className='price'>{eachProduct.price}</h5>
             <p>{eachProduct.description}</p>
 
@@ -268,15 +218,18 @@ function Home() {
 
           </div>
         ))}
+        
+      {
+        (state.isLogin === 1) ?
+          <nav className='navBar'>
+            <ul >
+              <li> <Link to={`/`}>Home</Link> </li>
+              <li> <Link to={`/gallery`}>Add itmes</Link> </li>
+              <li> <Link to={`/about`}>Account</Link> </li>
+            </ul>
+          </nav>
+          : null}
       </div>
-
-
-    </div>
-
-
-
-
-
   );
 }
 

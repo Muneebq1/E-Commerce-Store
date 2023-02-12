@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
 import { GlobalContext } from './context/Context';
 import axios from "axios";
-
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faHome,faAdd } from "@fortawesome/free-solid-svg-icons";
 import './App.css';
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 
@@ -126,9 +126,9 @@ function App() {
         (state.isLogin === 1) ?
           <nav className='navBar'>
             <ul >
-              <li> <Link to={`/`}>Home</Link> </li>
-              <li> <Link to={`/gallery`}>Add itmes</Link> </li>
-              <li> <Link to={`/about`}>Account</Link> </li>
+              <li><FontAwesomeIcon icon={faHome}/> <Link to={`/`}>Home</Link> </li>
+              <li><FontAwesomeIcon icon={faAdd}/> <Link to={`/gallery`}>Add itmes</Link> </li>
+              <li> <FontAwesomeIcon icon={faUser}/><Link to={`/about`}>Account</Link> </li>
             </ul>
           </nav>
           : null}
