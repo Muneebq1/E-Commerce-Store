@@ -1,0 +1,62 @@
+  body {
+    background: url(../img/weather-and-sky-4k-nb.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+  }
+
+  .main {
+    display: flex;
+    font-size: 22px;
+    width: 45%;
+    margin: 1rem 0 1rem 0;
+    padding: 1rem 0 1rem 1rem;
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.5px);
+    -webkit-backdrop-filter: blur(7.5px);
+    border-radius: 10px;
+  }
+
+  .nav_div {
+    display: flex;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    color: white;
+    padding: 1em 0;
+    font-size: 100%;
+    overflow: hidden;
+    height: 9%;
+    padding-left: 5%;
+  }
+
+  .weather_app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    color: #fff;
+  }
+
+  .city {
+    font-size: 46px;
+    margin-bottom: 40px;
+  }
+
+  .left {
+    line-height: 2.5rem;
+  }
+
+  .right {
+    line-height: 2rem;
+    margin-left: 50px;
+    margin-top: 80px;
+  }
+
+  .input {
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 800px;
+    height: 30px;
+    border: none;
+  }

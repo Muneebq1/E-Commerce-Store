@@ -1,0 +1,41 @@
+.signuphead{
+    text-align: center;
+}
+.signupform {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 20px;
+}
+.signupButton{
+    background-color: rgb(97, 184, 70);
+    color: white;
+    width: 120px;
+    height: 30px;
+    border-radius: 10px;
+    margin-left: 80px;
+}
+.namediv>input {
+    width: 250px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+.emailsdiv>input {
+    width: 250px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+.passDiv>input {
+    width: 250px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+.contactDiv>input {
+    width: 250px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}

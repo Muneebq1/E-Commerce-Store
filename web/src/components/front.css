@@ -1,0 +1,14 @@
+.Mainhead{
+    text-align: center;
+}
+.mainImg{
+    margin-left: 50px;
+}
+.startButton{
+    background-color: rgb(97, 184, 70);
+    color: white;
+    width: 120px;
+    height: 30px;
+    border-radius: 10px;
+    margin-left: 100px;
+}

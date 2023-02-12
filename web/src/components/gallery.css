@@ -1,0 +1,36 @@
+.pName{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    width: 250px;
+    margin-left: 30px;
+    
+}
+.pDescription{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    width: 250px;
+    margin-left: 30px;
+    height: 50px;
+
+}
+.pPrice{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    width: 250px;
+    margin-left: 30px;
+
+}
+.addButton{
+    background-color: rgb(97, 184, 70);
+    color: white;
+    width: 120px;
+    height: 30px;
+    border-radius: 10px;
+    margin-left: 100px;
+}
