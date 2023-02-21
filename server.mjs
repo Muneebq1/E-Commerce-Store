@@ -10,15 +10,10 @@ import authApis from './apis/auth.mjs'
 import productApis from './apis/product.mjs'
 import { userModel } from './dbRepo/model.mjs'
 
-
-
 const SECRET = process.env.SECRET || "topsecret";
-
 
 const app = express()
 const port = process.env.PORT || 5001;
-
-
 
 app.use(express.json());
 app.use(cookieParser());
