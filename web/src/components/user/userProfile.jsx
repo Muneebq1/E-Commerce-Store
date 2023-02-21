@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useContext } from "react";
-import { GlobalContext } from '../context/Context';
+import { GlobalContext } from '../../context/Context';
 
 
-function Userabout() {
+function UserProfile() {
     let { state, dispatch } = useContext(GlobalContext);
 
 
@@ -31,4 +31,4 @@ function Userabout() {
     )
 }
 
-export default Userabout;
+export default UserProfile;

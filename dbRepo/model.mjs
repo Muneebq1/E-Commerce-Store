@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-
 let productSchema = new mongoose.Schema({
     name: { type: String, required: true },
     price: Number,
@@ -9,6 +8,13 @@ let productSchema = new mongoose.Schema({
 });
 export const productModel = mongoose.model('products', productSchema);
 
+let cartProductSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    price: Number,
+    description: String,
+    createdOn: { type: Date, default: Date.now }
+});
+export const cartProductModel = mongoose.model('carts', cartProductSchema);
 
 const userSchema = new mongoose.Schema({
     firstName: { type: String },

@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { GlobalContext } from '../context/Context';
+import { GlobalContext } from '../../context/Context';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye ,faEnvelope} from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";

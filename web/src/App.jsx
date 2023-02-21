@@ -2,20 +2,22 @@ import { useContext, useEffect } from "react";
 import { GlobalContext } from './context/Context';
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faHome,faAdd } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faHome, faAdd } from "@fortawesome/free-solid-svg-icons";
 import './App.css';
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 
 
-import Home from "./components/home";
-import About from "./components/about";
-import Gallery from "./components/gallery";
-import Login from "./components/login";
-import Signup from "./components/signup";
-import Front from "./components/front";
-import Userhome from "./components/userHome";
-import Usercart from "./components/userCart";
-import Userabout from "./components/userAbout";
+import Home from "./components/admin/home/home";
+import About from "./components/admin/profile/profile";
+import Gallery from "./components/admin/add-item/addItem";
+
+import Login from "./components/login/login";
+import Signup from "./components/signup/signup";
+import Front from "./components/front-page/front";
+
+import Userhome from "./components/user/userHome";
+import Usercart from "./components/user/userCart";
+import Userabout from "./components/user/userProfile";
 
 // let see
 // check please
@@ -114,39 +116,14 @@ function App() {
           <nav className='navBar'>
             <ul >
               <li> <Link to={`/`}>Home</Link> </li>
-              <li> <Link to={`/gallery`}>Add itmes</Link> </li>
+              <li> <Link to={`/gallery`}>Add to Cart</Link> </li>
               <li> <Link to={`/about`}>Account</Link> </li>
             </ul>
           </nav>
           : null}
 
-
-
-      {
-        (state.isLogin === 1) ?
-          <nav className='navBar'>
-            <ul >
-              <li><FontAwesomeIcon icon={faHome}/> <Link to={`/`}>Home</Link> </li>
-              <li><FontAwesomeIcon icon={faAdd}/> <Link to={`/gallery`}>Add itmes</Link> </li>
-              <li> <FontAwesomeIcon icon={faUser}/><Link to={`/about`}>Account</Link> </li>
-            </ul>
-          </nav>
-          : null}
-
-
-      {(state.isLogin === 1) ?
-        // adminroute
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="gallery" element={<Gallery />} />
-          <Route path="*" element={<Navigate to="/" replace={true} />} />
-        </Routes>
-        : null}
-
-        {/* userroute */}
       {(state.isLogin === true) ?
-
+        /* userRoute */
         <Routes>
           <Route path="/" element={<Userhome />} />
           <Route path="about" element={<Userabout />} />
@@ -155,7 +132,27 @@ function App() {
         </Routes>
         : null}
 
+      {
+        (state.isLogin === 1) ?
+          <nav className='navBar'>
+            <ul >
+              <li><FontAwesomeIcon icon={faHome} /> <Link to={`/`}>Home</Link> </li>
+              <li><FontAwesomeIcon icon={faAdd} /> <Link to={`/gallery`}>Add itmes</Link> </li>
+              <li> <FontAwesomeIcon icon={faUser} /><Link to={`/about`}>Account</Link> </li>
+            </ul>
+          </nav>
+          : null}
 
+
+      {(state.isLogin === 1) ?
+        // adminRoute
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="gallery" element={<Gallery />} />
+          <Route path="*" element={<Navigate to="/" replace={true} />} />
+        </Routes>
+        : null}
 
       {(state.isLogin === false) ?
         <Routes>

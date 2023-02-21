@@ -1,5 +1,5 @@
 import './front.css'
-import img from './img/silayni.png'
+import img from '../img/saylani.png'
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 
 

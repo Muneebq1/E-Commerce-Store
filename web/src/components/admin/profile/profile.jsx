@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useContext} from "react";
-import { GlobalContext } from '../context/Context';
-import './about.css'
+import { GlobalContext } from '../../../context/Context';
+import './profile.css'
 
-function About() {
+function Profile() {
     let { state, dispatch } = useContext(GlobalContext);
 
 
@@ -24,11 +24,11 @@ function About() {
 
     return(
         <div>
-        <h1>This is about</h1>
+        <h1>This is profile</h1>
         <button className="logoutButton" onClick={logoutHandler}>Logout</button>
         </div>
     ) 
 
 }
 
-export default About;
+export default Profile;

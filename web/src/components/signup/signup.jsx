@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import axios from 'axios';
-import { GlobalContext } from '../context/Context';
+import { GlobalContext } from '../../context/Context';
 import './signup.css'
 import { Link } from "react-router-dom";
 

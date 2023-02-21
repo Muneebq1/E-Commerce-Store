@@ -1,15 +1,15 @@
 
+
+
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from "axios";
 import { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from '../context/Context';
-import './home.css'
-import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { GlobalContext } from '../../../context/Context';
+import './addItem.css'
 
 
-
-function Home() {
+function Gallery() {
 
   let { state, dispatch } = useContext(GlobalContext);
 
@@ -150,87 +150,65 @@ function Home() {
 
 
   return (
-    <div className='all-post'>
-        {products.map((eachProduct, i) => (
-          <div key={eachProduct._id} className="post">
-            <h2>{eachProduct.name}</h2>
-            <h5 className='price'>{eachProduct.price}</h5>
-            <p>{eachProduct.description}</p>
+    <div>
+      <form onSubmit={myFormik.handleSubmit}>
+        <input
+            className='pName'
+          id="productName"
+          placeholder="Product Name"
+          value={myFormik.values.productName}
+          onChange={myFormik.handleChange}
+        />
+        {
+          (myFormik.touched.productName && Boolean(myFormik.errors.productName)) ?
+            <span style={{ color: "red" }}>{myFormik.errors.productName}</span>
+            :
+            null
+        }
 
-            <button onClick={() => {
-              deleteProduct(eachProduct._id)
-            }}>delete</button>
+        <br />
+        <input
+            className='pPrice'
+          id="productPrice"
+          placeholder="Product Price"
+          value={myFormik.values.productPrice}
+          onChange={myFormik.handleChange}
+        />
+        {
+          (myFormik.touched.productPrice && Boolean(myFormik.errors.productPrice)) ?
+            <span style={{ color: "red" }}>{myFormik.errors.productPrice}</span>
+            :
+            null
+        }
 
-            <button onClick={() => {
-              editMode(eachProduct)
-            }}>edit</button>
+        <br />
+        <input
+            className='pDescription'
+          id="productDescription"
+          placeholder="Product Description"
+          value={myFormik.values.productDescription}
+          onChange={myFormik.handleChange}
+        />
+        {
+          (myFormik.touched.productDescription && Boolean(myFormik.errors.productDescription)) ?
+            <span style={{ color: "red" }}>{myFormik.errors.productDescription}</span>
+            :
+            null
+        }
 
-            {(isEditMode && editingProduct._id === eachProduct._id) ?
-              <div>
+        <br />
+        <button className='addButton' type="submit"> Submit </button>
+      </form>
 
-                <form onSubmit={editFormik.handleSubmit}>
-                  <input
-                    id="productName"
-                    placeholder="Product Name"
-                    value={editFormik.values.productName}
-                    onChange={editFormik.handleChange}
-                  />
-                  {
-                    (editFormik.touched.productName && Boolean(editFormik.errors.productName)) ?
-                      <span style={{ color: "red" }}>{editFormik.errors.productName}</span>
-                      :
-                      null
-                  }
+      <br />
+      <br />
+    </div>
 
-                  <br />
-                  <input
-                    id="productPrice"
-                    placeholder="Product Price"
-                    value={editFormik.values.productPrice}
-                    onChange={editFormik.handleChange}
-                  />
-                  {
-                    (editFormik.touched.productPrice && Boolean(editFormik.errors.productPrice)) ?
-                      <span style={{ color: "red" }}>{editFormik.errors.productPrice}</span>
-                      :
-                      null
-                  }
 
-                  <br />
-                  <input
-                    id="productDescription"
-                    placeholder="Product Description"
-                    value={editFormik.values.productDescription}
-                    onChange={editFormik.handleChange}
-                  />
-                  {
-                    (editFormik.touched.productDescription && Boolean(editFormik.errors.productDescription)) ?
-                      <span style={{ color: "red" }}>{editFormik.errors.productDescription}</span>
-                      :
-                      null
-                  }
 
-                  <br />
-                  <button type="submit"> Submit </button>
-                </form>
 
-              </div> : null}
 
-          </div>
-        ))}
-        
-      {
-        (state.isLogin === 1) ?
-          <nav className='navBar'>
-            <ul >
-              <li> <Link to={`/`}>Home</Link> </li>
-              <li> <Link to={`/gallery`}>Add itmes</Link> </li>
-              <li> <Link to={`/about`}>Account</Link> </li>
-            </ul>
-          </nav>
-          : null}
-      </div>
   );
 }
 
-export default Home;
+export default Gallery;
