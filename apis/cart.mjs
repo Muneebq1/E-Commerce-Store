@@ -1,10 +1,11 @@
 import express from "express";
-import { cartProductModel } from "./../dbRepo/model.mjs";
+import { cartProductModel } from "../dbRepo/model.mjs";
 
 const router = express.Router();
 
 router.post("/cart", (req, res) => {
   const body = req.body;
+  console.log(body)
   if (
     // validation
     !body.name ||
@@ -16,7 +17,7 @@ router.post("/cart", (req, res) => {
     });
     return;
   }
-
+  console.log({body})
   cartProductModel.create(
     {
       name: body.name,
@@ -29,15 +30,62 @@ router.post("/cart", (req, res) => {
         console.log(saved);
 
         res.send({
-          message: "product added successfully",
+          message: "carts added successfully",
         });
       } else {
         res.status(500).send({
           message: "server error",
+          error: err
         });
       }
     }
   );
 });
+
+router.get('/carts', (req, res) => {
+    cartProductModel.find({},
+        (err, data) => {
+        if (!err) {
+            res.send({
+                message: "got all carts successfully",
+                data: data
+            })
+        } else {
+            res.status(500).send({
+                message: "server error"
+            })
+        }
+    });
+}, [])
+
+router.delete('/cart/:id', (req, res) => {
+  const id = req.params.id;
+
+  cartProductModel.deleteOne({ _id: id }, (err, deletedData) => {
+      console.log("deleted: ", deletedData);
+      if (!err) {
+
+          if (deletedData.deletedCount !== 0) {
+              res.send({
+                  message: "cart has been deleted successfully",
+              })
+          } else {
+              res.status(404);
+              res.send({
+                  message: "No cart found with this id: " + id,
+              });
+          }
+      } else {
+          res.status(500).send({
+              message: "server error"
+          })
+      }
+  });
+
+})
+
+
+
+
 
 export default router;

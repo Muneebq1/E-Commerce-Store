@@ -1,16 +1,13 @@
 import axios from "axios";
 import { useContext } from "react";
-import { GlobalContext } from '../../context/Context';
-
+import { GlobalContext } from '../../store/Context';
 
 function UserProfile() {
     let { state, dispatch } = useContext(GlobalContext);
 
-
     const logoutHandler = async () => {
         try {
-            let response = await axios.post(`${state.baseUrl}/logout`,
-                {},
+            let response = await axios.post(`${state.baseUrl}/logout`, {},
                 {
                     withCredentials: true
                 })
@@ -21,8 +18,6 @@ function UserProfile() {
             console.log("axios error", error)
         }
     }
-
-
     return (
         <div>
             <h1>this is user about</h1>
@@ -30,5 +25,4 @@ function UserProfile() {
         </div>
     )
 }
-
 export default UserProfile;

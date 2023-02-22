@@ -25,8 +25,6 @@ const userSchema = new mongoose.Schema({
 });
 export const userModel = mongoose.model('Users', userSchema);
 
-
-
 const mongodbURI = process.env.mongodbURI ||
  "mongodb+srv://muneeb:whyitellyou@cluster0.yqmvs2t.mongodb.net/firstdb?retryWrites=true&w=majority"
 

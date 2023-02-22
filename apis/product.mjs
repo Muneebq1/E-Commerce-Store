@@ -1,10 +1,7 @@
 import express from 'express';
-import mongoose from 'mongoose';
-import {productModel} from './../dbRepo/model.mjs'
+import {productModel} from '../dbRepo/model.mjs'
 
 const router = express.Router()
-
-
 
 router.post('/product', (req, res) => {
 
@@ -24,8 +21,6 @@ router.post('/product', (req, res) => {
     console.log(body.name)
     console.log(body.price)
     console.log(body.description)
-
-   
 
     productModel.create({
         name: body.name,
@@ -49,16 +44,7 @@ router.post('/product', (req, res) => {
 })
 
 router.get('/products', (req, res) => {
-
-    // const userId = new mongoose.Types.ObjectId(req.body.token._id);
-
     productModel.find({},
-        // {},
-        // {
-        //     sort: { "_id": -1 },
-        //     limit: 100,
-        //     skip: 0
-        // }, 
         (err, data) => {
         if (!err) {
             res.send({

@@ -4,7 +4,6 @@ import { reducer } from './reducer';
 export const GlobalContext = createContext("Initial Value");
 
 let data = {
-  darkTheme: true,
   user: {},
   isLogin: null,
   baseUrl: (window.location.href.includes('localhost')) 

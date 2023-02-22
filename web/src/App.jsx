@@ -1,11 +1,10 @@
 import { useContext, useEffect } from "react";
-import { GlobalContext } from './context/Context';
+import { GlobalContext } from './store/Context';
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faHome, faAdd } from "@fortawesome/free-solid-svg-icons";
 import './App.css';
 import { Routes, Route, Link, Navigate } from "react-router-dom";
-
 
 import Home from "./components/admin/home/home";
 import About from "./components/admin/profile/profile";
@@ -22,43 +21,15 @@ import Userabout from "./components/user/userProfile";
 // let see
 // check please
 function App() {
-
   let { state, dispatch } = useContext(GlobalContext);
-  // const [fullName, setFullName] = useState("");
-
-
-  console.log("State", state)
-  const logoutHandler = async () => {
-    try {
-      let response = await axios.post(`${state.baseUrl}/logout`,
-        {},
-        {
-          withCredentials: true
-        })
-      dispatch({
-        type: 'USER_LOGOUT'
-      })
-    } catch (error) {
-      console.log("axios error", error)
-    }
-  }
-
 
   useEffect(() => {
-    const admin = "admin@aa.com"
-
-
     const getProfile = async () => {
-
       try {
         let response = await axios.get(`${state.baseUrl}/profile`, {
           withCredentials: true
         })
-        // dispatch({
-        //   type: 'USER_LOGIN',
-        //   payload: response.data
-        // })
-        if (response.data.profile.email === admin) {
+        if (response.data.profile.role === "admin") {
           dispatch({
             type: 'USER_ADMIN',
             payload: response.data.profile
@@ -74,7 +45,6 @@ function App() {
           type: 'USER_LOGOUT'
         })
       }
-
     }
     getProfile()
   }, [])
@@ -89,7 +59,6 @@ function App() {
       // Do something with request error
       return Promise.reject(error);
     });
-
     // Add a response interceptor
     axios.interceptors.response.use(function (response) {
       // Any status code that lie within the range of 2xx cause this function to trigger
@@ -107,13 +76,11 @@ function App() {
     });
   })
 
-
   return (
     <div>
-      {/* for user */}
-      {
+      { /* for user */
         (state.isLogin === true) ?
-          <nav className='navBar'>
+          <nav>
             <ul >
               <li> <Link to={`/`}>Home</Link> </li>
               <li> <Link to={`/gallery`}>Add to Cart</Link> </li>
@@ -132,9 +99,9 @@ function App() {
         </Routes>
         : null}
 
-      {
+      { // for admin
         (state.isLogin === 1) ?
-          <nav className='navBar'>
+          <nav >
             <ul >
               <li><FontAwesomeIcon icon={faHome} /> <Link to={`/`}>Home</Link> </li>
               <li><FontAwesomeIcon icon={faAdd} /> <Link to={`/gallery`}>Add itmes</Link> </li>
@@ -142,7 +109,6 @@ function App() {
             </ul>
           </nav>
           : null}
-
 
       {(state.isLogin === 1) ?
         // adminRoute
@@ -163,14 +129,10 @@ function App() {
         </Routes>
         : null
       }
-
       {(state.isLogin === null) ?
         <div> Splash screen</div>
         : null}
-
-
     </div>
   );
 }
-
 export default App;
