@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import 'animate.css';
 import { GlobalContext } from '../../store/Context';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEnvelope } from "@fortawesome/free-solid-svg-icons";
@@ -47,48 +48,41 @@ function Login() {
 
     return (
         <>
-            <div className="loginhead">
-                <h1>SAYLANI WELFARE</h1>
-                <h4>ONLINE DISCOUNT STORE</h4>
+            <div className='main'>
+                <form onSubmit={loginHandler} className="form">
+                    <div class="animate__animated animate__fadeIn right">
+                        <h1 className="login-heading"> Login to continue </h1>
+                        <input
+                            required
+                            className="input"
+                            id="email"
+                            label="Email"
+                            type="email"
+                            name="username"
+                            placeholder="email"
+                            autoComplete="username"
+                            onChange={(e) => { setEmail(e.target.value) }}
+                        />
+                        <br />
+                        <input
+                            required
+                            className=" input"
+                            id="password"
+                            label="Password"
+                            type="password"
+                            name="current-password"
+                            autoComplete="current-password"
+                            placeholder="password"
+                            onChange={(e) => { setPassword(e.target.value) }}
+                        />
+                        {(state.isLogin === false) ?
+                            <p className='text'>dont have an account? <Link className="a" to={`/signup`}>Signup</Link>
+                                <Link className="forget" to={`/forget-password`}>Forget Password?</Link>
+                            </p> : null}
+                        <button className="button" type="submit">Login</button>
+                    </div>
+                </form>
             </div>
-            {state.text}
-            <form onSubmit={loginHandler} className="loginForm">
-                <div className="emaildiv">
-                    <input
-                        className="TextField"
-                        id="email"
-                        label="Email"
-                        variant="outlined"
-                        type="email"
-                        name="username"
-                        placeholder="Email"
-                        autoComplete="username"
-                        onChange={(e) => { setEmail(e.target.value) }}
-                    />
-                    <FontAwesomeIcon className="icon" icon={faEnvelope} />
-                </div>
-                <br />
-                <div className="passdiv">
-                    <input
-                        className="TextField"
-                        id="password"
-                        label="Password"
-                        variant="outlined"
-                        type="password"
-                        name="current-password"
-                        autoComplete="current-password"
-                        placeholder="Password"
-                        onChange={(e) => { setPassword(e.target.value) }}
-                    />
-                    <FontAwesomeIcon className="icon" icon={faEye} />
-                </div>
-                <br />
-                <button className="loginButton" type="submit">Login</button>
-                {(state.isLogin === false) ?
-                    <p>dont have an account? <Link className="a" to={`/signup`}>Register</Link>
-                    </p> : null}
-            </form>
-            <p>{result}</p>
         </>
     )
 }

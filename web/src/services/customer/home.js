@@ -1,12 +1,13 @@
 import axios from "axios";
-const BASE_URL = window.location.href.includes("localhost")
-  ? `http://localhost:5001/api/v1`
-  : `/api/v1`;
+import { BASE_URL } from "../constants";
+;
 
 const AddToCart = (data) => {
     axios.post(`${BASE_URL}/cart`, {
+      id: data._id,
       name: data.name,
       price: data.price,
+      quantity: data.quantity,
       description: data.description,
     })
       .then(response => {
@@ -16,4 +17,5 @@ const AddToCart = (data) => {
         console.log("error:", err);
       })
   }
+
   export {AddToCart}

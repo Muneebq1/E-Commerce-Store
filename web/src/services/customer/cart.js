@@ -1,7 +1,6 @@
 import axios from "axios";
-const BASE_URL = window.location.href.includes("localhost")
-  ? `http://localhost:5001/api/v1`
-  : `/api/v1`;
+import { BASE_URL } from "../constants";
+
 
 const GetAllCarts = async () => {
   try {
@@ -21,4 +20,18 @@ const DeleteCart = async (id) => {
     console.log("error in getting all carts", error);
   }
 };
-export { GetAllCarts, DeleteCart };
+
+const AddingOrder = async (value,eachCart) => {
+  try {
+    const response = await axios.put(
+      `${BASE_URL}/cart/${eachCart._id}`,
+      {
+       order: value
+      }
+      );
+    return response.data;
+  } catch (error) {
+    console.log("error in adding order", error);
+  }
+};
+export { GetAllCarts, DeleteCart , AddingOrder};

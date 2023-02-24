@@ -6,10 +6,12 @@ const router = express.Router()
 router.post('/product', (req, res) => {
 
     const body = req.body;
+    // console.log(body , 'body >>>>>>>>>>>>>>>>')
 
     if ( // validation
         !body.name
         || !body.price
+        || !body.quantity
         || !body.description
     ) {
         res.status(400).send({
@@ -18,19 +20,16 @@ router.post('/product', (req, res) => {
         return;
     }
 
-    console.log(body.name)
-    console.log(body.price)
-    console.log(body.description)
-
     productModel.create({
         name: body.name,
         price: body.price,
+        quantity: body.quantity,
         description: body.description,
         // owner: new mongoose.Types.ObjectId(body.token._id)
     },
         (err, saved) => {
             if (!err) {
-                console.log(saved);
+                console.log(saved );
 
                 res.send({
                     message: "product added successfully"
@@ -117,12 +116,14 @@ router.put('/product/:id', async (req, res) => {
     if (
         !body.name ||
         !body.price ||
+        !body.quantity ||
         !body.description
     ) {
         res.status(400).send(` required parameter missing. example request body:
         {
             "name": "value",
             "price": "value",
+            "quantity": "value",
             "description": "value"
         }`)
         return;
@@ -133,6 +134,7 @@ router.put('/product/:id', async (req, res) => {
             {
                 name: body.name,
                 price: body.price,
+                quantity: body.quantity,
                 description: body.description
             },
             { new: true }

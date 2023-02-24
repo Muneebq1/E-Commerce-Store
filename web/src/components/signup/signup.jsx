@@ -37,37 +37,26 @@ function Signup() {
 
     return (
         <>
-            <div className="signuphead">
-                <h1>SAYLANI WELFARE</h1>
-                <h4>ONLINE DISCOUNT STORE</h4>
+            <div className='main'>
+                <form onSubmit={signupHandler} className="form">
+                    <div className='animate__animated animate__fadeIn right-s'>
+                        <h1 className="signup-heading"> SignUp to continue </h1>
+                        <input required className="input-s" type="text" name="name" placeholder="Enter your name" onChange={(e) => { setName(e.target.value) }} />
+                        <br />
+                        <input required className="input-s" type="email" name="username" autoComplete="username" placeholder="email" onChange={(e) => { setEmail(e.target.value) }} />
+                        <br />
+                        <input required className="input-s" type="password" name="new-password" autoComplete="new-password" placeholder="password" onChange={(e) => { setPassword(e.target.value) }} />
+                        <br />
+                        <input required className="input-s" type="password" name="new-password" autoComplete="new-password" placeholder="confirm password" />
+                        <br />
+                        {(state.isLogin === false) ?
+                            <p className="text">already have an account? <Link className="a" to={`/login`}>Login</Link>
+                            </p> : null}
+                        <button className="button-s" type="submit">Signup</button>
+                    </div>
+                </form>
+
             </div>
-            <form className="signupform" onSubmit={signupHandler}>
-                <div className="namediv">
-                    <input type="text" name="name" placeholder="Full name" onChange={(e) => { setName(e.target.value) }} />
-                    <FontAwesomeIcon className="icon" icon={faUser} />
-                </div>
-                <br />
-                <div className="contactDiv">
-                    <input type="number" name="new-password" autoComplete="new-password" placeholder="Contact" />
-                    <FontAwesomeIcon className="icon" icon={faPhone} />
-                </div>
-                <br />
-                <div className="emailsdiv">
-                    <input type="email" name="username" autoComplete="username" placeholder="Email" onChange={(e) => { setEmail(e.target.value) }} />
-                    <FontAwesomeIcon className="icon" icon={faEnvelope} />
-                </div>
-                <br />
-                <div className="passDiv">
-                    <input type="password" name="new-password" autoComplete="new-password" placeholder="Password" onChange={(e) => { setPassword(e.target.value) }} />
-                    <FontAwesomeIcon className="icon" icon={faEye} />
-                </div>
-                <br />
-                {(state.isLogin === false) ?
-                    <p className=''>already have an account? <Link className="a" to={`/login`}>Login</Link>
-                    </p> : null}
-                <button className="signupButton" type="submit">Signup</button>
-            </form>
-            <p>{result}</p>
         </>
     )
 }

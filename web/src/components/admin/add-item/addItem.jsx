@@ -1,19 +1,16 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import axios from "axios";
-import { GlobalContext } from '../../../store/Context';
-import { useContext } from 'react';
 import './addItem.css'
 import { AddProducts } from '../../../services/admin/add';
 
 
 function AddItem() {
-  let { state } = useContext(GlobalContext);
 
   const myFormik = useFormik({
     initialValues: {
       productName: '',
       productPrice: '',
+      productQuantity: '',
       productDescription: '',
     },
     validationSchema:
@@ -29,6 +26,11 @@ function AddItem() {
           .positive("enter positive product price")
           .required('product name is required'),
 
+          productQuantity: yup
+          .number('Enter your product quantity')
+          .positive("enter positive product quantity")
+          .required('product quantity is required'),
+
         productDescription: yup
           .string('Enter your product Description')
           .required('product name is required')
@@ -36,6 +38,7 @@ function AddItem() {
           .max(500, "please enter within 20 characters "),
       }),
       onSubmit: (values) => {
+        // console.log(values)
         AddProducts(values)
       },
   })
@@ -71,6 +74,21 @@ function AddItem() {
             :
             null
         }
+        <br />
+         <input
+          className='pQuantity'
+          id="productQuantity"
+          placeholder="Product quantity"
+          value={myFormik.values.productQuantity}
+          onChange={myFormik.handleChange}
+        />
+        {
+          (myFormik.touched.productQuantity && Boolean(myFormik.errors.productQuantity)) ?
+            <span style={{ color: "blue" }}>{myFormik.errors.productQuantity}</span>
+            :
+            null
+        }
+        
         <br />
         <input
           className='pDescription'

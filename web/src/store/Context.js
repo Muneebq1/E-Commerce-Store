@@ -1,9 +1,8 @@
 import React, { createContext, useReducer } from 'react'
 import { reducer } from './reducer';
 
-export const GlobalContext = createContext("Initial Value");
 
-let data = {
+let initialState = {
   user: {},
   isLogin: null,
   baseUrl: (window.location.href.includes('localhost')) 
@@ -12,8 +11,10 @@ let data = {
   
 }
 
+export const GlobalContext = createContext(initialState);
+
 export default function ContextProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, data)
+  const [state, dispatch] = useReducer(reducer, initialState)
   return (
     <GlobalContext.Provider value={{ state, dispatch }}>
       {children}

@@ -1,0 +1,30 @@
+.main {
+    text-align: center;
+    background-image: url(vector-realistic-isolated-neon-sign-260nw-1188351907.webp);
+    height: 721px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.getStarted {
+    font-weight: 600;
+    font-size: 36px;
+    margin-top: 20%;
+    height: 50px;
+    margin-left: 45%;
+    border: none;
+    color: lightgrey;
+    background: none;
+    transition: all 0.3s ease-in-out;
+}
+.getStarted:hover{
+    cursor: pointer;
+    border: 5px solid rgb(94,188,233);
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 20px;
+    border-bottom: none;
+    border-top: none;
+    font-size: 46px;
+
+}

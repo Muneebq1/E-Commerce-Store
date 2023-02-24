@@ -12,14 +12,13 @@ import Gallery from "./components/admin/add-item/addItem";
 
 import Login from "./components/login/login";
 import Signup from "./components/signup/signup";
-import Front from "./components/front-page/front";
+import LandingPage from "./components/landing-page/landingPage";
 
-import Userhome from "./components/user/userHome";
-import Usercart from "./components/user/userCart";
-import Userabout from "./components/user/userProfile";
+import UserHome from "./components/user/userHome";
+import UserCart from "./components/user/userCart";
+import UserProfile from "./components/user/userProfile";
 
-// let see
-// check please
+
 function App() {
   let { state, dispatch } = useContext(GlobalContext);
 
@@ -83,7 +82,7 @@ function App() {
           <nav>
             <ul >
               <li> <Link to={`/`}>Home</Link> </li>
-              <li> <Link to={`/gallery`}>Add to Cart</Link> </li>
+              <li> <Link to={`/gallery`}>Cart</Link> </li>
               <li> <Link to={`/about`}>Account</Link> </li>
             </ul>
           </nav>
@@ -92,9 +91,9 @@ function App() {
       {(state.isLogin === true) ?
         /* userRoute */
         <Routes>
-          <Route path="/" element={<Userhome />} />
-          <Route path="about" element={<Userabout />} />
-          <Route path="gallery" element={<Usercart />} />
+          <Route path="/" element={<UserHome />} />
+          <Route path="about" element={<UserProfile />} />
+          <Route path="gallery" element={<UserCart />} />
           <Route path="*" element={<Navigate to="/" replace={true} />} />
         </Routes>
         : null}
@@ -123,15 +122,14 @@ function App() {
       {(state.isLogin === false) ?
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Front />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<Navigate to="/" replace={true} />} />
         </Routes>
         : null
       }
       {(state.isLogin === null) ?
-        <div> Splash screen</div>
-        : null}
+        <div id='preloader'></div> : null}
     </div>
   );
 }

@@ -22,6 +22,7 @@ function Userhome() {
         <div key={eachProduct._id}>
           <h2>{eachProduct.name}</h2>
           <h5 className='price'>{eachProduct.price}</h5>
+          <h5>{eachProduct.quantity}</h5>
           <p>{eachProduct.description}</p>
           <button onClick={() => {
             AddToCart(eachProduct)

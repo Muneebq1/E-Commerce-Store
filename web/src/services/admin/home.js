@@ -1,8 +1,5 @@
 import axios from "axios";
-
-const BASE_URL = window.location.href.includes("localhost")
-  ? `http://localhost:5001/api/v1`
-  : `/api/v1`;
+import { BASE_URL } from "../constants";
 
 const GetAllProducts = async () => {
   try {
@@ -30,6 +27,7 @@ const EditProducts = async (values, editingProduct) => {
       {
         name: values.productName,
         price: values.productPrice,
+        quantity: values.productQuantity,
         description: values.productDescription,
       }
     );
