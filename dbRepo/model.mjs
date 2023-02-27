@@ -15,7 +15,6 @@ let cartProductSchema = new mongoose.Schema({
   quantity: Number,
   order: Number,
   description: String,
-  id: String,
   createdOn: { type: Date, default: Date.now },
 });
 export const cartProductModel = mongoose.model("carts", cartProductSchema);

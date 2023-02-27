@@ -1,0 +1,9 @@
+.post{
+    margin-left: 40%;
+    height: 250px;
+    width: 400px;
+}
+.flex{
+    justify-content: center;
+    display: flex;
+}

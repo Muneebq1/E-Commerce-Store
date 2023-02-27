@@ -20,16 +20,9 @@ router.post("/cart", async (req, res) => {
     });
     return;
   }
-cartProductModel.findById(
-  
-  (id === body.id) ? null : null
-
-
-  )
   
     cartProductModel.create(
       {
-        id: body.id,
         name: body.name,
         price: body.price,
         quantity: body.quantity,

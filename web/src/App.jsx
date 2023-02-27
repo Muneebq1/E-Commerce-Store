@@ -18,35 +18,35 @@ import UserHome from "./components/user/userHome";
 import UserCart from "./components/user/userCart";
 import UserProfile from "./components/user/userProfile";
 
-
 function App() {
   let { state, dispatch } = useContext(GlobalContext);
 
   useEffect(() => {
-    const getProfile = async () => {
-      try {
-        let response = await axios.get(`${state.baseUrl}/profile`, {
-          withCredentials: true
-        })
-        if (response.data.profile.role === "admin") {
-          dispatch({
-            type: 'USER_ADMIN',
-            payload: response.data.profile
-          })
-        } else {
-          dispatch({
-            type: 'USER_LOGIN',
-            payload: response.data.profile
-          })
-        }
-      } catch (error) {
-        dispatch({
-          type: 'USER_LOGOUT'
-        })
-      }
-    }
     getProfile()
   }, [])
+
+  const getProfile = async () => {
+    try {
+      let response = await axios.get(`${state.baseUrl}/profile`, {
+        withCredentials: true
+      })
+      if (response.data.profile.role === "admin") {
+        dispatch({
+          type: 'USER_ADMIN',
+          payload: response.data.profile
+        })
+      } else {
+        dispatch({
+          type: 'USER_LOGIN',
+          payload: response.data.profile
+        })
+      }
+    } catch (error) {
+      dispatch({
+        type: 'USER_LOGOUT'
+      })
+    }
+  }
 
   useEffect(() => {
     // Add a request interceptor
@@ -77,15 +77,19 @@ function App() {
 
   return (
     <div>
-      { /* for user */
+      {
+    // for user 
         (state.isLogin === true) ?
-          <nav>
+        <div>
+          <nav className="navbar">
             <ul >
               <li> <Link to={`/`}>Home</Link> </li>
               <li> <Link to={`/gallery`}>Cart</Link> </li>
               <li> <Link to={`/about`}>Account</Link> </li>
             </ul>
           </nav>
+          <div className="image"></div>
+          </div>
           : null}
 
       {(state.isLogin === true) ?

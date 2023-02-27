@@ -26,56 +26,51 @@
 
 @-webkit-keyframes animate-preloader {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
 @keyframes animate-preloader {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
-
-
-
-.navBar {
+/* .navbar {
   display: flex;
-  justify-content: center;
   border-radius: 10px;
-  flex-wrap: wrap;
-  background-color: darkblue;
-  width: 318px;
-  height: 50px;
   color: white;
   position: fixed;
-  margin-top: 570px;
 }
 
-
-.navBar>ul {
+.navbar>ul {
   display: flex;
   list-style-type: none;
-  margin-left: -50px;
-  padding-right: 10px;
-}
-.navBar>ul>li{
-  margin-right: 15px;
 }
 
+.navbar>ul>li {
+  margin-left: 100%;
+}
 
-.navBar>ul>li>a {
+.navbar>ul>li>a {
+  padding: 25px;
+  font-size: large;
+  font-weight: 600;
   text-decoration: none;
-  display: inline-block;
-  justify-content: center;
   color: white;
-
 }
+
+.image {
+  background-image: url('./images.png');
+height: 500px;
+width: 100%;
+background-repeat: no-repeat;
+} */

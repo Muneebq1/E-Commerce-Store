@@ -1,4 +1,9 @@
-import { useEffect, useState, useContext } from 'react';
+import React from 'react';
+import { useEffect, useState } from 'react';
+import "./app.css"
+
+import { Button } from 'antd';
+
 import { GetAllProducts } from "../../services/admin/home";
 import { AddToCart } from '../../services/customer/home';
 
@@ -9,24 +14,25 @@ function Userhome() {
 
   useEffect(() => {
     GetAllProducts()
-    .then((value) => {
-      setProducts(value)
-    }).catch((err) => {
-      console.log(err, "error")
-    })
+      .then((value) => {
+        setProducts(value)
+      }).catch((err) => {
+        console.log(err, "error")
+      })
   }, [loadProduct])
 
   return (
     <div >
       {products.map((eachProduct, i) => (
-        <div key={eachProduct._id}>
+        <div className='post' key={eachProduct._id}>
           <h2>{eachProduct.name}</h2>
           <h5 className='price'>{eachProduct.price}</h5>
           <h5>{eachProduct.quantity}</h5>
           <p>{eachProduct.description}</p>
-          <button onClick={() => {
+          <Button onClick={() => {
             AddToCart(eachProduct)
-          }}>add to cart</button>
+          }}>add to cart</Button>
+
         </div>
       ))}
     </div>
