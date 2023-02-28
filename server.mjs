@@ -10,6 +10,19 @@ import productApis from "./apis/product.mjs";
 import cartApis from "./apis/cart.mjs";
 import { userModel } from "./dbRepo/model.mjs";
 
+import multer from "multer";
+
+const storageConfig = multer.diskStorage({
+  destination: './uploads/',
+  filename: function (req, file, cb) {
+
+      console.log("mul-file: ", file);
+      cb(null, `${new Date().getTime()}-${file.originalname}`)
+  }
+})
+let uploadMiddleware = multer({ storage: storageConfig })
+
+
 const SECRET = process.env.SECRET || "topsecret";
 
 const app = express();
@@ -17,7 +30,7 @@ const port = process.env.PORT || 5001;
 
 app.use(express.json());
 app.use(cookieParser());
-
+app.use(uploadMiddleware.any())
 app.use(
   cors({
     origin: ["http://localhost:3000", "https://localhost:3000", "*"],

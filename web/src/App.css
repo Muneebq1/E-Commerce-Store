@@ -1,3 +1,4 @@
+
 #preloader {
   position: fixed;
   top: 0;
@@ -44,33 +45,18 @@
   }
 }
 
-/* .navbar {
-  display: flex;
-  border-radius: 10px;
-  color: white;
-  position: fixed;
-}
-
 .navbar>ul {
   display: flex;
+}
+.navbar>ul>input{
+  margin: 20px;
+}
+.navbar>ul>li{
+  margin: 20px;
   list-style-type: none;
 }
-
-.navbar>ul>li {
-  margin-left: 100%;
-}
-
-.navbar>ul>li>a {
-  padding: 25px;
-  font-size: large;
-  font-weight: 600;
+.navbar>ul>li>a{
+font-size: 22px;
+font-weight: 600;
   text-decoration: none;
-  color: white;
 }
-
-.image {
-  background-image: url('./images.png');
-height: 500px;
-width: 100%;
-background-repeat: no-repeat;
-} */

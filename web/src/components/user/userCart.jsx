@@ -32,9 +32,14 @@ function UserCart() {
         }
         AddingOrder(value, eachCart).then(() => { setLoadCart(!loadCart) }).catch((err) => { console.log(err) })
     }
+
+
+
     return (
         <>
             {carts.map((eachCart, i) => {
+
+
                 return (
                     <div key={eachCart._id} className="post">
                         <h2>{eachCart.name}</h2>
@@ -50,7 +55,7 @@ function UserCart() {
                             DeleteCart(eachCart._id)
                                 .then(() => { setLoadCart(!loadCart) }).catch((err) => { console.log(err) })
                         }}>remove</button>
-                    </div>
+                     </div>
                 )
             })}
         </>

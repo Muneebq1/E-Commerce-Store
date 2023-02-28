@@ -1,12 +1,24 @@
 import express from 'express';
 import {productModel} from '../dbRepo/model.mjs'
+import multer from 'multer';
 
 const router = express.Router()
 
-router.post('/product', (req, res) => {
+
+// const storageConfig = multer.diskStorage({
+//     destination: './uploads/',
+//     filename: function (req, file, cb) {
+
+//         console.log("mul-file: ", file);
+//         cb(null, `${new Date().getTime()}-${file.originalname}`)
+//     }
+// })
+// let uploadMiddleware = multer({ storage: storageConfig })
+
+
+router.post('/product',  (req, res) => {
 
     const body = req.body;
-    // console.log(body , 'body >>>>>>>>>>>>>>>>')
 
     if ( // validation
         !body.name

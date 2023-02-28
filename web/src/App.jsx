@@ -83,6 +83,8 @@ function App() {
         <div>
           <nav className="navbar">
             <ul >
+              <h1>Discount Store</h1>
+                <input type="text" placeholder="Search here" />
               <li> <Link to={`/`}>Home</Link> </li>
               <li> <Link to={`/gallery`}>Cart</Link> </li>
               <li> <Link to={`/about`}>Account</Link> </li>
@@ -106,6 +108,8 @@ function App() {
         (state.isLogin === 1) ?
           <nav >
             <ul >
+              <h1>Discount Store</h1>
+                <input type="text" placeholder="Search here" />
               <li><FontAwesomeIcon icon={faHome} /> <Link to={`/`}>Home</Link> </li>
               <li><FontAwesomeIcon icon={faAdd} /> <Link to={`/gallery`}>Add itmes</Link> </li>
               <li> <FontAwesomeIcon icon={faUser} /><Link to={`/about`}>Account</Link> </li>

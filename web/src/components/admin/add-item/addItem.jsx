@@ -2,9 +2,13 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import './addItem.css'
 import { AddProducts } from '../../../services/admin/add';
+import { useState } from 'react';
 
 
 function AddItem() {
+  const [preview ,setPreview] = useState()
+  const [picture ,setPicture] = useState()
+
 
   const myFormik = useFormik({
     initialValues: {
@@ -12,6 +16,7 @@ function AddItem() {
       productPrice: '',
       productQuantity: '',
       productDescription: '',
+      picture: '',
     },
     validationSchema:
       yup.object({
@@ -26,7 +31,7 @@ function AddItem() {
           .positive("enter positive product price")
           .required('product name is required'),
 
-          productQuantity: yup
+        productQuantity: yup
           .number('Enter your product quantity')
           .positive("enter positive product quantity")
           .required('product quantity is required'),
@@ -37,10 +42,9 @@ function AddItem() {
           .min(3, "please enter more then 3 characters ")
           .max(500, "please enter within 20 characters "),
       }),
-      onSubmit: (values) => {
-        // console.log(values)
-        AddProducts(values)
-      },
+    onSubmit: (values) => {
+      AddProducts(values , picture)
+    },
   })
 
 
@@ -63,6 +67,7 @@ function AddItem() {
         <br />
         <input
           className='pPrice'
+          type='number'
           id="productPrice"
           placeholder="Product Price"
           value={myFormik.values.productPrice}
@@ -75,8 +80,9 @@ function AddItem() {
             null
         }
         <br />
-         <input
+        <input
           className='pQuantity'
+          type='number'
           id="productQuantity"
           placeholder="Product quantity"
           value={myFormik.values.productQuantity}
@@ -88,7 +94,7 @@ function AddItem() {
             :
             null
         }
-        
+
         <br />
         <input
           className='pDescription'
@@ -103,6 +109,23 @@ function AddItem() {
             :
             null
         }
+        <br />
+        <label htmlFor='picture'>picture</label>
+        <br />
+        <input
+          type="file"
+          id='picture'
+          value={myFormik.values.picture}
+          accept='image/*'
+          onChange={
+            (e) => {
+            let url = URL.createObjectURL(e.currentTarget.files[0])
+            setPreview(url)
+            setPicture(e.currentTarget.files[0])
+          }
+          } />
+        <br />
+        <img src={preview} alt="" />
         <br />
         <button className='addButton' type="submit"> Submit </button>
       </form>
