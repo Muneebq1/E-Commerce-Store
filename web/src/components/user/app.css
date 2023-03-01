@@ -1,5 +1,8 @@
+body {
+    margin: 15px;
+}
+
 .post {
-    margin-left: 40%;
     height: 250px;
     width: 400px;
 }
@@ -9,39 +12,49 @@
     display: flex;
 }
 
-/* .img {
-    background-image: url('./online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-free-vector.jpg');
-    height: 150px;
-    width: 150px;
-    background-size: cover;
-} */
-
 .cards {
     float: left;
     padding: 5px;
-    /* height: 490px; */
+    height: 350px;
     width: 280px;
     margin: 8px;
     margin-bottom: 70px;
     margin-top: -1px;
 }
 
-.heading {
-    border: 1px solid black;
-    padding: 10px;
-    line-height: 0.5;
+.image {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.content {
-    line-height: 0.5;
-    border: 1px solid black;
-    padding: 10px;
+.cards-img {
+    height: 150px;
 }
 
-.content>p {
+.price {
     color: orangered;
 }
 
-.home{
-margin-left: 10%;    
+h3 {
+    text-align: center;
+}
+
+.category {
+    display: flex;
+    margin-bottom: 40px;
+    margin-left: 20%;
+}
+
+.category>div>img {
+    width: 150px;
+    padding: 5px;
+
+}
+
+.category>div {
+    box-shadow: 1px 1px 10px gray;
+    border: 1px solid lightgray;
+    text-align: center;
+    margin: 30px;
+    border-radius: 10px;
 }

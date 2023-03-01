@@ -90,7 +90,7 @@ function AddItem() {
         />
         {
           (myFormik.touched.productQuantity && Boolean(myFormik.errors.productQuantity)) ?
-            <span style={{ color: "blue" }}>{myFormik.errors.productQuantity}</span>
+            <span style={{ color: "red" }}>{myFormik.errors.productQuantity}</span>
             :
             null
         }
@@ -110,8 +110,6 @@ function AddItem() {
             null
         }
         <br />
-        <label htmlFor='picture'>picture</label>
-        <br />
         <input
           type="file"
           id='picture'
@@ -125,7 +123,7 @@ function AddItem() {
           }
           } />
         <br />
-        <img src={preview} alt="" />
+        <img width={200} src={preview} alt="" />
         <br />
         <button className='addButton' type="submit"> Submit </button>
       </form>

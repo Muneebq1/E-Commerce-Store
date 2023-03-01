@@ -43,18 +43,18 @@ function UserCart() {
                 return (
                     <div key={eachCart._id} className="post">
                         <h2>{eachCart.name}</h2>
-                        <h5 className='price'>{eachCart.price}</h5>
                         <h5>{eachCart.quantity} in stock</h5>
+                        <h5 className='price'>{eachCart.price}</h5>
                         <div className='flex'>
                             <button onClick={() => { minus(eachCart) }}>-</button>
                             <h4>{eachCart.order}</h4>
                             <button onClick={() => { plus(eachCart) }}>+</button>
                         </div>
-                        <p>{eachCart.description}</p>
+                        {/* <p>{eachCart.description}</p> */}
                         <button onClick={() => {
                             DeleteCart(eachCart._id)
                                 .then(() => { setLoadCart(!loadCart) }).catch((err) => { console.log(err) })
-                        }}>remove</button>
+                        }}>remove item</button>
                      </div>
                 )
             })}

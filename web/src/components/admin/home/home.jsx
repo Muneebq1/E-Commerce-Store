@@ -83,6 +83,7 @@ function Home() {
       {products.map((eachProduct, i) => (
         <div key={eachProduct._id} className="post">
           <h2>{eachProduct.name}</h2>
+        <img width={100} src={eachProduct.pictureUrl} alt="" />  
           <h5 className="price">{eachProduct.price}</h5>
           <h5>{eachProduct.quantity}</h5>
           <p>{eachProduct.description}</p>
@@ -169,24 +170,7 @@ function Home() {
           ) : null}
         </div>
       ))}
-      {state.isLogin === 1 ? (
-        <nav className="navBar">
-          <ul>
-            <li>
-              {" "}
-              <Link to={`/`}>Home</Link>{" "}
-            </li>
-            <li>
-              {" "}
-              <Link to={`/gallery`}>Add items</Link>{" "}
-            </li>
-            <li>
-              {" "}
-              <Link to={`/about`}>Account</Link>{" "}
-            </li>
-          </ul>
-        </nav>
-      ) : null}
+  
     </div>
   );
 }

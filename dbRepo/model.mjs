@@ -6,6 +6,7 @@ let productSchema = new mongoose.Schema({
   quantity: Number,
   description: String,
   createdOn: { type: Date, default: Date.now },
+  pictureUrl: String,
 });
 export const productModel = mongoose.model("products", productSchema);
 
