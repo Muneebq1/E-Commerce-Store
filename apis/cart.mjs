@@ -6,45 +6,75 @@ const router = express.Router();
 router.post("/cart", async (req, res) => {
   const body = req.body;
   // const id = req.params.id;
- 
+
   if (
     // validation
     !body.name ||
     !body.id ||
     !body.price ||
     !body.quantity ||
-    !body.description
+    !body.description ||
+    !body.pictureUrl
   ) {
     res.status(400).send({
       message: "required parameters missing",
     });
     return;
   }
-  
-    cartProductModel.create(
-      {
-        name: body.name,
-        price: body.price,
-        quantity: body.quantity,
-        order: 0,
-        description: body.description,
-        // owner: new mongoose.Types.ObjectId(body.token._id)
-      },
-      (err, saved) => {
-        if (!err) {
-          console.log(saved);
 
-          res.send({
-            message: "carts added successfully",
-          });
-        } else {
-          res.status(500).send({
-            message: "server error",
-            error: err,
-          });
-        }
+  cartProductModel.findOne({ id: body.id }, (err, data) => {
+    if (data) {
+      const id = body._id
+      try {
+        cartProductModel
+          .findByIdAndUpdate(
+            id,
+            {
+              order: 1,
+            },
+            { new: true }
+          )
+          .exec();
+
+        console.log("updated: ", data);
+
+        res.send({
+          message: "order added successfully",
+        });
+      } catch (error) {
+        res.status(500).send({
+          message: "server error",
+        });
       }
-    );
+    } else {
+      cartProductModel.create(
+        {
+          name: body.name,
+          price: body.price,
+          quantity: body.quantity,
+          order: 1,
+          id: body.id,
+          description: body.description,
+          pictureUrl: body.pictureUrl,
+          // owner: new mongoose.Types.ObjectId(body.token._id)
+        },
+        (err, saved) => {
+          if (!err) {
+            // console.log(saved);
+
+            res.send({
+              message: "carts added successfully",
+            });
+          } else {
+            res.status(500).send({
+              message: "server error",
+              error: err,
+            });
+          }
+        }
+      );
+    }
+  });
 });
 
 router.get(
@@ -117,7 +147,7 @@ router.put("/cart/:id", async (req, res) => {
     console.log("updated: ", data);
 
     res.send({
-      // message: "order modified successfully",      
+      // message: "order modified successfully",
     });
   } catch (error) {
     res.status(500).send({

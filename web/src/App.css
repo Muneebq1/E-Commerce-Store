@@ -44,18 +44,40 @@
     transform: rotate(360deg);
   }
 }
-
+.navbar{
+  background-color: #364d79;
+  color: #fff;
+  margin-top: -16px;
+}
 .navbar>ul {
   display: flex;
 }
-.navbar>ul>input{
-  margin: 20px;
+.navbar>ul>h1{
+  font-size: 32px;
 }
-.navbar>ul>li{
+.navbar>ul>div{
+  display: flex;
+  margin-top: 1%;
+  margin-left: 12%;
+}
+.navbar>ul>input{
+  border: none;
+  /* background-color: lightgray; */
+  padding-left: 1%;
+  font-weight: 400;
+  /* color: gray; */
+  margin-top: 2.2%;
+  margin-left: 12%;
+  height: 30px;
+  width: 30%;
+  border-radius: 20px;
+}
+.navbar>ul>div>li{
   margin: 20px;
   list-style-type: none;
 }
-.navbar>ul>li>a{
+.navbar>ul>div>li>a{
+  color: #fff;
 font-size: 22px;
 font-weight: 600;
   text-decoration: none;

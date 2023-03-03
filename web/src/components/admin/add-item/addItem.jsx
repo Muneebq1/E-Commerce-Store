@@ -114,7 +114,6 @@ function AddItem() {
           type="file"
           id='picture'
           value={myFormik.values.picture}
-          accept='image/*'
           onChange={
             (e) => {
             let url = URL.createObjectURL(e.currentTarget.files[0])

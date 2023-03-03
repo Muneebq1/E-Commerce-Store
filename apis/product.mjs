@@ -13,7 +13,7 @@ const storageConfig = multer.diskStorage({
     cb(null, `${new Date().getTime()}-${file.originalname}`);
   },
 });
-var uploadMiddleware = multer();
+var uploadMiddleware = multer({ storage: storageConfig });
 
 
 

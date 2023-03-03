@@ -1,7 +1,3 @@
-body {
-    margin: 15px;
-}
-
 .post {
     height: 250px;
     width: 400px;
@@ -23,8 +19,7 @@ body {
 }
 
 .image {
-    text-align: center;
-    margin-bottom: 30px;
+margin-left: 30%;
 }
 
 .cards-img {
@@ -35,7 +30,7 @@ body {
     color: orangered;
 }
 
-h3 {
+h1 {
     text-align: center;
 }
 
@@ -54,7 +49,78 @@ h3 {
 .category>div {
     box-shadow: 1px 1px 10px gray;
     border: 1px solid lightgray;
+    height: 160px;
     text-align: center;
     margin: 30px;
     border-radius: 10px;
+}
+.categories{
+    height: 110px;
+}
+
+/* for cart */
+.cart-cards {
+    display: flex;
+    padding: 5px;
+    height: 200px;
+    width: 700px;
+    margin: 8px;
+    margin-bottom: 20px;
+    margin-top: -15px;
+
+}
+
+.cart-name {
+    font-size: 32px;
+    /* width: 200px; */
+    margin-left: 5%;
+    margin-right: 10%;
+    margin-top: 10%;
+}
+
+.cart-image {
+    height: 190px;
+    width: 10px;
+
+}
+
+.ant-card-cover{
+    width: 200px;
+    /* background-color: black; */
+}
+
+.buttons {
+    margin-top: 13%;
+    height: 25px;
+    width: 25px;
+    border: none;
+}
+
+.cart-order {
+    font-size: 22px;
+    padding-top: 5%;
+    margin: 20px;
+    color: gray;
+}
+
+.add-button {
+    width: 100px;
+}
+
+.cart-price {
+    margin-top: 10%;
+    margin-left: 10%;
+    font-size: 26px;
+    color: orangered;
+}
+.cart-trash{
+    border: none;
+    margin-top: 4%;
+}
+.cart-quantity{
+    margin-left: 5%;
+    margin-top: 6%;
+}
+.cart-flex{
+    display: flex;
 }

@@ -5,8 +5,8 @@ let productSchema = new mongoose.Schema({
   price: Number,
   quantity: Number,
   description: String,
-  createdOn: { type: Date, default: Date.now },
   pictureUrl: String,
+  createdOn: { type: Date, default: Date.now },
 });
 export const productModel = mongoose.model("products", productSchema);
 
@@ -15,7 +15,9 @@ let cartProductSchema = new mongoose.Schema({
   price: Number,
   quantity: Number,
   order: Number,
+  id: String ,
   description: String,
+  pictureUrl: String,
   createdOn: { type: Date, default: Date.now },
 });
 export const cartProductModel = mongoose.model("carts", cartProductSchema);

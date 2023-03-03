@@ -83,11 +83,14 @@ function App() {
         <div>
           <nav className="navbar">
             <ul >
-              <h1>Discount Store</h1>
-                <input type="text" placeholder="Search here" />
+              <h1>DISCOUNT STORE</h1>
+                <input type="text" placeholder="Search by product name" />
+                <div>
+
               <li> <Link to={`/`}>Home</Link> </li>
               <li> <Link to={`/gallery`}>Cart</Link> </li>
               <li> <Link to={`/about`}>Account</Link> </li>
+                </div>
             </ul>
           </nav>
           <div className="image"></div>
@@ -106,9 +109,9 @@ function App() {
 
       { // for admin
         (state.isLogin === 1) ?
-          <nav >
+          <nav className="navbar">
             <ul >
-              <h1>Discount Store</h1>
+              <h1>DISCOUNT STORE</h1>
                 <input type="text" placeholder="Search here" />
               <li><FontAwesomeIcon icon={faHome} /> <Link to={`/`}>Home</Link> </li>
               <li><FontAwesomeIcon icon={faAdd} /> <Link to={`/gallery`}>Add itmes</Link> </li>
