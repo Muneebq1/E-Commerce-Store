@@ -3,20 +3,32 @@ import { DeleteCart, GetAllCarts, AddingOrder } from "../../services/customer/ca
 import { Card, Button } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faSubtract, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { AddOrder, GetAllOrders } from '../../services/customer/order';
 
 
 function UserCart() {
     const [carts, setCarts] = useState([])
+    const [orders, setOrders] = useState([])
     const [loadCart, setLoadCart] = useState(false)
-    const [total, setTotal] = useState(0)
 
     useEffect(() => {
         GetAllCarts()
             .then((data) => {
                 setCarts(data)
-                add(data)
             })
             .catch((err) => { console.log(err, "error") })
+
+        GetAllOrders()
+            .then((value) => {
+                const orderStatus = value.map((order) => {
+                    return order.status
+                })
+                setOrders(orderStatus);
+            })
+            .catch((err) => {
+                console.log(err, "error");
+            });
+
     }, [loadCart])
 
     const plus = (eachCart) => {
@@ -40,21 +52,12 @@ function UserCart() {
         }
         AddingOrder(value, eachCart).then(() => { setLoadCart(!loadCart) }).catch((err) => { console.log(err) })
     }
-
-    const add = (data) => {
-        data.map((d) => {
-
-            setTotal(total + d.price)
-        })
-
-    }
-
     return (
         <>
+            <p>{orders[0]}</p>
             {carts.map((eachCart, i) => {
-// console.log(carts)
                 return (
-                    <Card hoverable className='cart-cards' cover={<img className="cart-image"width={"20px"} alt="products" src={eachCart.pictureUrl} />}
+                    <Card hoverable className='cart-cards' cover={<img className="cart-image" alt="products" src={eachCart.pictureUrl} />}
                     >
                         <div className='cart-flex '>
                             <h1 className='cart-name'>{eachCart.name.toUpperCase()}</h1>
@@ -66,11 +69,11 @@ function UserCart() {
                         <div className='cart-flex'>
                             <Button className='cart-trash' onClick={() => { DeleteCart(eachCart._id).then(() => { setLoadCart(!loadCart) }).catch((err) => { console.log(err) }) }}><FontAwesomeIcon icon={faTrash} /></Button>
                             <h5 className='cart-quantity'>{eachCart.quantity} in stock</h5>
-                            {/* <p>{total}</p> */}
                         </div>
                     </Card>
                 )
             })}
+            <button onClick={() => { carts.map((d) => { AddOrder(d) }) }}>submit</button>
         </>
     )
 }

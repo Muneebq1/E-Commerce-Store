@@ -3,16 +3,18 @@ import * as yup from "yup";
 import { useEffect, useState, useContext } from "react";
 import { GlobalContext } from "../../../store/Context";
 import "./home.css";
-import { Link } from "react-router-dom";
+import { Button, Card, Carousel } from 'antd';
 import {
   GetAllProducts,
   DeleteProduct,
   EditProducts,
 } from "../../../services/admin/home";
+import { GetAllOrders } from "../../../services/customer/order";
 
 function Home() {
   let { state } = useContext(GlobalContext);
   const [products, setProducts] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [loadProduct, setLoadProduct] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
@@ -35,6 +37,16 @@ function Home() {
       .catch((err) => {
         console.log(err, "error");
       });
+
+    GetAllOrders()
+      .then((value) => {
+        setOrders(value);
+      })
+      .catch((err) => {
+        console.log(err, "error");
+      });
+
+
   }, [loadProduct]);
 
   const editFormik = useFormik({
@@ -77,100 +89,111 @@ function Home() {
         });
     },
   });
+  console.log(orders, "orders")
 
   return (
     <div className="all-post">
-      {products.map((eachProduct, i) => (
-        <div key={eachProduct._id} className="post">
-          <h2>{eachProduct.name}</h2>
-        <img width={100} src={eachProduct.pictureUrl} alt="" />  
-          <h5 className="price">{eachProduct.price}</h5>
-          <h5>{eachProduct.quantity}</h5>
-          <p>{eachProduct.description}</p>
-
-          <button
-            onClick={() => {
-              DeleteProduct(eachProduct._id)
-                .then(setLoadProduct(!loadProduct))
-                .catch((err) => {
-                  console.log(err);
-                });
-            }}
+      {products.map((eachProduct, i) => {
+        const Meta = Card
+        return (
+          <Card hoverable className="cards" cover={<img className="cards-img" alt="products" src={eachProduct.pictureUrl} />}
           >
-            delete
-          </button>
+            <Meta title={eachProduct.name} description={eachProduct.description} />
+            <p className="price">
+              {eachProduct.price}
+            </p>
+            <h5>{eachProduct.quantity}</h5>
+            <button
+              onClick={() => {
+                DeleteProduct(eachProduct._id)
+                  .then(setLoadProduct(!loadProduct))
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }}
+            >
+              delete
+            </button>
 
-          <button
-            onClick={() => {
-              editMode(eachProduct);
-            }}
-          >
-            edit
-          </button>
+            <button
+              onClick={() => {
+                editMode(eachProduct);
+              }}
+            >
+              edit
+            </button>
 
-          {isEditMode && editingProduct._id === eachProduct._id ? (
-            <div>
-              <form onSubmit={editFormik.handleSubmit}>
-                <input
-                  id="productName"
-                  placeholder="Product Name"
-                  value={editFormik.values.productName}
-                  onChange={editFormik.handleChange}
-                />
-                {editFormik.touched.productName &&
-                  Boolean(editFormik.errors.productName) ? (
-                  <span style={{ color: "red" }}>
-                    {editFormik.errors.productName}
-                  </span>
-                ) : null}
-                <br />
-                <input
-                  id="productPrice"
-                  placeholder="Product Price"
-                  value={editFormik.values.productPrice}
-                  onChange={editFormik.handleChange}
-                />
-                {editFormik.touched.productPrice &&
-                  Boolean(editFormik.errors.productPrice) ? (
-                  <span style={{ color: "red" }}>
-                    {editFormik.errors.productPrice}
-                  </span>
-                ) : null}
-                <br />
-                <input
-                  id="productQuantity"
-                  placeholder="Product quantity"
-                  value={editFormik.values.productQuantity}
-                  onChange={editFormik.handleChange}
-                />
-                {editFormik.touched.productQuantity &&
-                  Boolean(editFormik.errors.productQuantity) ? (
-                  <span style={{ color: "red" }}>
-                    {editFormik.errors.productQuantity}
-                  </span>
-                ) : null}
+            {isEditMode && editingProduct._id === eachProduct._id ? (
+              <div>
+                <form onSubmit={editFormik.handleSubmit}>
+                  <input
+                    id="productName"
+                    placeholder="Product Name"
+                    value={editFormik.values.productName}
+                    onChange={editFormik.handleChange}
+                  />
+                  {editFormik.touched.productName &&
+                    Boolean(editFormik.errors.productName) ? (
+                    <span style={{ color: "red" }}>
+                      {editFormik.errors.productName}
+                    </span>
+                  ) : null}
+                  <br />
+                  <input
+                    id="productPrice"
+                    placeholder="Product Price"
+                    value={editFormik.values.productPrice}
+                    onChange={editFormik.handleChange}
+                  />
+                  {editFormik.touched.productPrice &&
+                    Boolean(editFormik.errors.productPrice) ? (
+                    <span style={{ color: "red" }}>
+                      {editFormik.errors.productPrice}
+                    </span>
+                  ) : null}
+                  <br />
+                  <input
+                    id="productQuantity"
+                    placeholder="Product quantity"
+                    value={editFormik.values.productQuantity}
+                    onChange={editFormik.handleChange}
+                  />
+                  {editFormik.touched.productQuantity &&
+                    Boolean(editFormik.errors.productQuantity) ? (
+                    <span style={{ color: "red" }}>
+                      {editFormik.errors.productQuantity}
+                    </span>
+                  ) : null}
 
-                <br />
-                <input
-                  id="productDescription"
-                  placeholder="Product Description"
-                  value={editFormik.values.productDescription}
-                  onChange={editFormik.handleChange}
-                />
-                {editFormik.touched.productDescription &&
-                  Boolean(editFormik.errors.productDescription) ? (
-                  <span style={{ color: "red" }}>
-                    {editFormik.errors.productDescription}
-                  </span>
-                ) : null}
-                <br />
-                <button type="submit"> Submit </button>
-              </form>
-            </div>
-          ) : null}
-        </div>
-      ))}
-  
+                  <br />
+                  <input
+                    id="productDescription"
+                    placeholder="Product Description"
+                    value={editFormik.values.productDescription}
+                    onChange={editFormik.handleChange}
+                  />
+                  {editFormik.touched.productDescription &&
+                    Boolean(editFormik.errors.productDescription) ? (
+                    <span style={{ color: "red" }}>
+                      {editFormik.errors.productDescription}
+                    </span>
+                  ) : null}
+                  <br />
+                  <button type="submit"> Submit </button>
+                </form>
+              </div>
+            ) : null}
+          </Card>
+
+        )
+      })}
+      {/* {orders.map((eachOrder) => {
+        console.log(eachOrder, ">>>>")
+        return (<p>
+          {eachOrder.name}
+        </p>
+        )
+      })} */}
     </div>
   );
 }

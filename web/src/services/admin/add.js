@@ -3,7 +3,6 @@ import { BASE_URL } from "../constants";
 
 const AddProducts = (values, picture) => {
 
-
   let formData = new FormData();
   formData.append("product", picture);
   formData.append("name", values.productName);

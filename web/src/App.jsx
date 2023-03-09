@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
 import { GlobalContext } from './store/Context';
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faHome, faAdd } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faUser, faHome, faAdd } from "@fortawesome/free-solid-svg-icons";
 import './App.css';
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 
@@ -75,25 +75,40 @@ function App() {
     });
   })
 
+  const logoutHandler = async () => {
+    try {
+      let response = await axios.post(`${state.baseUrl}/logout`, {},
+        {
+          withCredentials: true
+        })
+      dispatch({
+        type: 'USER_LOGOUT'
+      })
+    } catch (error) {
+      console.log("axios error", error)
+    }
+  }
+
   return (
     <div>
       {
-    // for user 
+        // for user 
         (state.isLogin === true) ?
-        <div>
-          <nav className="navbar">
-            <ul >
-              <h1>DISCOUNT STORE</h1>
+          <div>
+            <nav className="navbar">
+              <ul >
+                <h1>DISCOUNT STORE</h1>
                 <input type="text" placeholder="Search by product name" />
                 <div>
 
-              <li> <Link to={`/`}>Home</Link> </li>
-              <li> <Link to={`/gallery`}>Cart</Link> </li>
-              <li> <Link to={`/about`}>Account</Link> </li>
+                  <li> <Link to={`/`}>Home</Link> </li>
+                  <li> <Link to={`/gallery`}>Cart</Link> </li>
+                  <li> <Link to={`/about`}>Account</Link> </li>
+                  <li><button className="" onClick={logoutHandler}>Logout</button></li>
                 </div>
-            </ul>
-          </nav>
-          <div className="image"></div>
+              </ul>
+            </nav>
+            <div className="image"></div>
           </div>
           : null}
 
@@ -112,10 +127,20 @@ function App() {
           <nav className="navbar">
             <ul >
               <h1>DISCOUNT STORE</h1>
-                <input type="text" placeholder="Search here" />
-              <li><FontAwesomeIcon icon={faHome} /> <Link to={`/`}>Home</Link> </li>
-              <li><FontAwesomeIcon icon={faAdd} /> <Link to={`/gallery`}>Add itmes</Link> </li>
-              <li> <FontAwesomeIcon icon={faUser} /><Link to={`/about`}>Account</Link> </li>
+              <input type="text" placeholder="Search here" />
+              <div>
+                <li>
+                  {/* <FontAwesomeIcon icon={faHome} /> */}
+                  <Link to={`/`}>Home</Link> </li>
+                <li>
+                  {/* <FontAwesomeIcon icon={faAdd} />  */}
+                  <Link to={`/gallery`}>Add items</Link> </li>
+                <li>
+                  {/* <FontAwesomeIcon icon={faUser} /> */}
+                  <Link to={`/about`}>Account</Link> </li>
+                  <li><button className="" onClick={logoutHandler}>Logout</button></li>
+
+              </div>
             </ul>
           </nav>
           : null}

@@ -18,15 +18,33 @@ let cartProductSchema = new mongoose.Schema({
   id: String ,
   description: String,
   pictureUrl: String,
+  owner: {type: mongoose.ObjectId, required: true,},
   createdOn: { type: Date, default: Date.now },
 });
 export const cartProductModel = mongoose.model("carts", cartProductSchema);
 
+
+let orderSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  price: Number,
+  quantity: Number,
+  order: Number,
+  id: String ,
+  description: String,
+  pictureUrl: String,
+  status: String,
+  owner: {type: mongoose.ObjectId, required: true, ref: 'Users'},
+  createdOn: { type: Date, default: Date.now },
+});
+export const orderModel = mongoose.model("orders", orderSchema);
+
 const userSchema = new mongoose.Schema({
   firstName: { type: String },
   lastName: { type: String },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
+  email: { type: String, },
+  password: { type: String, },
+  owner: {type: String},
+  profilePic: {type: String,},
   createdOn: { type: Date, default: Date.now },
 });
 export const userModel = mongoose.model("Users", userSchema);

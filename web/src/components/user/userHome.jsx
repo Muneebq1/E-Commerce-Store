@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 import { GetAllProducts } from "../../services/admin/home";
 import { AddToCart } from '../../services/customer/home';
 import { Button, Card, Carousel } from 'antd';
-import Image from './carousel.jpg'
-import Image2 from './carousel 2.jpg'
-import Image3 from './carousel 3.jpg'
-import Image4 from './carousel 4.jpg'
-import fruits from './fruits.png'
-import vegetables from './vegetables.png'
-import grocery from './grocery.png'
-import masala from './masala.png'
+import Image from './img/carousel.jpg'
+import Image2 from './img/carousel 2.jpg'
+import Image3 from './img/carousel 3.jpg'
+import Image4 from './img/carousel 4.jpg'
+import fruits from './img/fruits.png'
+import vegetables from './img/vegetables.png'
+import grocery from './img/grocery.png'
+import masala from './img/masala.png'
 
 
 

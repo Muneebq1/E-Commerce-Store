@@ -37,4 +37,4 @@ const EditProducts = async (values, editingProduct) => {
   }
 };
 
-export { GetAllProducts, DeleteProduct, EditProducts };
+export { GetAllProducts, DeleteProduct, EditProducts};

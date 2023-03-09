@@ -8,6 +8,8 @@ import cookieParser from "cookie-parser";
 import authApis from "./apis/auth.mjs";
 import productApis from "./apis/product.mjs";
 import cartApis from "./apis/cart.mjs";
+import orderApis from "./apis/orders.mjs"
+import profilePicApis from './apis/profile.mjs'
 import { userModel } from "./dbRepo/model.mjs";
 
 const SECRET = process.env.SECRET || "topsecret";
@@ -62,7 +64,10 @@ app.use("/api/v1", (req, res, next) => {
 });
 
 app.use(`/api/v1`, productApis);
+app.use(`/api/v1`, orderApis);
 app.use(`/api/v1`, cartApis);
+app.use(`/api/v1`, profilePicApis);
+
 
 const getUser = async (req, res) => {
   let _id = "";

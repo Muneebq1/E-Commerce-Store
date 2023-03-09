@@ -1,11 +1,11 @@
 import express from "express";
+import mongoose from "mongoose";
 import { cartProductModel } from "../dbRepo/model.mjs";
 
 const router = express.Router();
 
 router.post("/cart", async (req, res) => {
   const body = req.body;
-  // const id = req.params.id;
 
   if (
     // validation
@@ -26,20 +26,8 @@ router.post("/cart", async (req, res) => {
     if (data) {
       const id = body._id
       try {
-        cartProductModel
-          .findByIdAndUpdate(
-            id,
-            {
-              order: 1,
-            },
-            { new: true }
-          )
-          .exec();
-
-        console.log("updated: ", data);
-
         res.send({
-          message: "order added successfully",
+          message: "already exist",
         });
       } catch (error) {
         res.status(500).send({
@@ -56,7 +44,7 @@ router.post("/cart", async (req, res) => {
           id: body.id,
           description: body.description,
           pictureUrl: body.pictureUrl,
-          // owner: new mongoose.Types.ObjectId(body.token._id)
+          owner: new mongoose.Types.ObjectId(body.token._id)
         },
         (err, saved) => {
           if (!err) {
@@ -80,7 +68,8 @@ router.post("/cart", async (req, res) => {
 router.get(
   "/carts",
   (req, res) => {
-    cartProductModel.find({}, (err, data) => {
+    const UserId = new mongoose.Types.ObjectId(req.body.token._id)
+    cartProductModel.find({owner: UserId}, (err, data) => {
       if (!err) {
         res.send({
           message: "got all carts successfully",
@@ -147,7 +136,7 @@ router.put("/cart/:id", async (req, res) => {
     console.log("updated: ", data);
 
     res.send({
-      // message: "order modified successfully",
+      message: "cart modified successfully",
     });
   } catch (error) {
     res.status(500).send({

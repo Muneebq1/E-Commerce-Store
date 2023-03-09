@@ -23,7 +23,11 @@ router.post("/product", uploadMiddleware.single('product'), (req, res) => {
 
     if (
       // validation
-      !body.name
+      !body.name,
+      !body.price,
+      !body.quantity,
+      !body.description,
+      !urlData[0]
     ) {
       res.status(400).send({
         message: "required parameters missing",
