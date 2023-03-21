@@ -138,8 +138,7 @@ function App() {
                 <li>
                   {/* <FontAwesomeIcon icon={faUser} /> */}
                   <Link to={`/about`}>Account</Link> </li>
-                  <li><button className="" onClick={logoutHandler}>Logout</button></li>
-
+                  
               </div>
             </ul>
           </nav>

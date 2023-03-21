@@ -20,6 +20,15 @@ const DeleteCart = async (id) => {
   }
 };
 
+const DeleteAllCarts = async (owner) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/carts/${owner}`);
+    console.log("response: ", response.data);
+  } catch (error) {
+    console.log("error in getting all carts", error);
+  }
+};
+
 const AddingOrder = async (value, eachCart) => {
   try {
     const response = await axios.put(`${BASE_URL}/cart/${eachCart._id}`, {
@@ -32,4 +41,4 @@ const AddingOrder = async (value, eachCart) => {
 };
 
 
-export { GetAllCarts, DeleteCart, AddingOrder };
+export { GetAllCarts, DeleteCart, AddingOrder, DeleteAllCarts };

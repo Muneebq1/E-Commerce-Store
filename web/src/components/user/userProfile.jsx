@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment/moment";
 import { useContext, useEffect, useState } from "react";
 import { AddPicture, GetProfilePic } from "../../services/customer/profile";
 import { GlobalContext } from '../../store/Context';
@@ -63,8 +64,12 @@ function UserProfile() {
             {orders.map((eachOrder) => {
                 return (
                     <div className="orders">
+                <h4>{state.user.firstName.toUpperCase()}</h4>
+                        <p>{moment(eachOrder.createdOn).startOf('hour').fromNow()}</p>
                         <p>{eachOrder.name}</p>
-                        <p>{eachOrder.price}</p>
+                        <p>Total Amount: Rs.{eachOrder.price * eachOrder.order}</p>
+                        <p>Total no of items: {eachOrder.order}</p>
+                       
                     </div>
 
                 )

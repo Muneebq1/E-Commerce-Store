@@ -13,8 +13,6 @@ import vegetables from './img/vegetables.png'
 import grocery from './img/grocery.png'
 import masala from './img/masala.png'
 
-
-
 function Userhome() {
   const [products, setProducts] = useState([])
   const [loadProduct, setLoadProduct] = useState(false)

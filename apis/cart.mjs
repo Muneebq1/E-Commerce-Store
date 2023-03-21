@@ -22,9 +22,9 @@ router.post("/cart", async (req, res) => {
     return;
   }
 
-  cartProductModel.findOne({ id: body.id }, (err, data) => {
+  cartProductModel.exists({ id: body.id , owner: body.token._id }, (err, data) => {
+   
     if (data) {
-      const id = body._id
       try {
         res.send({
           message: "already exist",
@@ -143,6 +143,29 @@ router.put("/cart/:id", async (req, res) => {
       message: "server error",
     });
   }
+});
+router.delete("/carts/:owner", (req, res) => {
+  const body = req.body;
+  // const id = req.params.owner;
+  
+  cartProductModel.deleteMany({ owner: body.token._id }, (err, deletedData) => {
+    if (!err) {
+      if (deletedData.deletedCount !== 0) {
+        res.send({
+          message: "carts has been deleted successfully",
+        });
+      } else {
+        res.status(404);
+        res.send({
+          message: "No carts found with this owner: " + body.token._id,
+        });
+      }
+    } else {
+      res.status(500).send({
+        message: "server error",
+      });
+    }
+  });
 });
 
 export default router;

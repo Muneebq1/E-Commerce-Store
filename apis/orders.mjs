@@ -14,6 +14,7 @@ router.post("/orders", async (req, res) => {
     !body.price ||
     !body.quantity ||
     !body.description ||
+    !body.order ||
     !body.pictureUrl
   ) {
     res.status(400).send({
@@ -21,30 +22,15 @@ router.post("/orders", async (req, res) => {
     });
     return;
   }
-
-  orderModel.findOne({ id: body.id }, (err, data) => {
-    if (data) {
-      const id = body._id;
-      try {
-        res.send({
-          message: "already exist",
-        });
-      } catch (error) {
-        res.status(500).send({
-          message: "server error",
-        });
-      }
-    } else {
       orderModel.create(
         {
           name: body.name,
           price: body.price,
           quantity: body.quantity,
-          order: 1,
+          order: body.order,
           id: body.id,
           description: body.description,
           pictureUrl: body.pictureUrl,
-          status: "pending",
           owner: new mongoose.Types.ObjectId(body.token._id),
         },
         (err, saved) => {
@@ -62,9 +48,7 @@ router.post("/orders", async (req, res) => {
           }
         }
       );
-    }
   });
-});
 
 router.get(
   "/orders",

@@ -48,12 +48,14 @@
   background-color: #364d79;
   color: #fff;
   margin-top: -16px;
+  height: 100px;
 }
 .navbar>ul {
   display: flex;
 }
 .navbar>ul>h1{
-  font-size: 32px;
+  margin-top: 30px;
+  font-size: 30px;
 }
 .navbar>ul>div{
   display: flex;

@@ -32,7 +32,6 @@ let orderSchema = new mongoose.Schema({
   id: String ,
   description: String,
   pictureUrl: String,
-  status: String,
   owner: {type: mongoose.ObjectId, required: true, ref: 'Users'},
   createdOn: { type: Date, default: Date.now },
 });
