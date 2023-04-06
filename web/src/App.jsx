@@ -104,7 +104,7 @@ function App() {
                   <li> <Link to={`/`}>Home</Link> </li>
                   <li> <Link to={`/gallery`}>Cart</Link> </li>
                   <li> <Link to={`/about`}>Account</Link> </li>
-                  <li><button className="" onClick={logoutHandler}>Logout</button></li>
+                  <li><button className="logout" onClick={logoutHandler}>Logout</button></li>
                 </div>
               </ul>
             </nav>

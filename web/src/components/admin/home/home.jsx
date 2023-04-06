@@ -92,36 +92,18 @@ function Home() {
   console.log(orders, "orders")
 
   return (
-    <div className="all-post">
+    <div className="all-products">
+      <h2>All Products</h2>
       {products.map((eachProduct, i) => {
-        const Meta = Card
+        const { Meta }= Card
         return (
-          <Card hoverable className="cards" cover={<img className="cards-img" alt="products" src={eachProduct.pictureUrl} />}
-          >
-            <Meta title={eachProduct.name} description={eachProduct.description} />
-            <p className="price">
-              {eachProduct.price}
-            </p>
-            <h5>{eachProduct.quantity}</h5>
-            <button
-              onClick={() => {
-                DeleteProduct(eachProduct._id)
-                  .then(setLoadProduct(!loadProduct))
-                  .catch((err) => {
-                    console.log(err);
-                  });
-              }}
-            >
-              delete
-            </button>
+          <Card hoverable className="admin-cards" cover={<img className="admin-card-img" alt="products" src={eachProduct.pictureUrl}/>}>
+          <Meta title={eachProduct.name} description={eachProduct.description} />
 
-            <button
-              onClick={() => {
-                editMode(eachProduct);
-              }}
-            >
-              edit
-            </button>
+            <h5>{eachProduct.quantity}</h5>
+            <p className="price">  {eachProduct.price}</p>
+            <button onClick={() => { DeleteProduct(eachProduct._id).then(setLoadProduct(!loadProduct)) }}>delete</button>
+            <button onClick={() => { editMode(eachProduct); }}> edit</button>
 
             {isEditMode && editingProduct._id === eachProduct._id ? (
               <div>

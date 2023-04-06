@@ -64,12 +64,10 @@
 }
 .navbar>ul>input{
   border: none;
-  /* background-color: lightgray; */
   padding-left: 1%;
   font-weight: 400;
-  /* color: gray; */
   margin-top: 2.2%;
-  margin-left: 12%;
+  margin-left: 10%;
   height: 30px;
   width: 30%;
   border-radius: 20px;
@@ -83,4 +81,13 @@
 font-size: 22px;
 font-weight: 600;
   text-decoration: none;
+}
+.logout{
+  font-weight: 600;
+  background-color: white;
+  color: #364d79;
+  border-radius: 20px;
+  border: none;
+height: 30px;
+width: 80px;
 }
