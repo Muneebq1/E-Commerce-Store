@@ -60,16 +60,16 @@ function UserProfile() {
                 <h2>{state.user.firstName.toUpperCase()}</h2>
                 <button className="check" onClick={() => { AddPicture(profilePic, state.user._id).then(setLoadProduct(!loadProduct)) }}><FontAwesomeIcon className="icon" icon={faCheck} /></button>
             </div>
-            <h2>Orders</h2>
+            <h2 className="heading">Orders</h2>
             {orders.map((eachOrder) => {
                 return (
                     <div className="orders">
-                <h4>{state.user.firstName.toUpperCase()}</h4>
+                        <h2 className="order-name">{state.user.firstName.toUpperCase()}</h2>
                         <p>{moment(eachOrder.createdOn).startOf('hour').fromNow()}</p>
                         <p>{eachOrder.name}</p>
-                        <p>Total Amount: Rs.{eachOrder.price * eachOrder.order}</p>
                         <p>Total no of items: {eachOrder.order}</p>
-                       
+                        <p>Total: <span className="order-price">Rs.{eachOrder.price * eachOrder.order}</span></p>
+
                     </div>
 
                 )

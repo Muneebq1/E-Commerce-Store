@@ -15,152 +15,142 @@ const storageConfig = multer.diskStorage({
 });
 var uploadMiddleware = multer({ storage: storageConfig });
 
-
-
-router.post("/product", uploadMiddleware.single('product'), (req, res) => {
-  try {
+router.post(
+  "/product",
+  uploadMiddleware.single("product"),
+  async (req, res) => {
     const body = req.body;
 
     if (
       // validation
-      !body.name,
-      !body.price,
-      !body.quantity,
-      !body.description,
-      !urlData[0]
+      (!body.name, !body.price, !body.quantity, !body.description, !urlData[0])
     ) {
-      res.status(400).send({
+      return res.status(400).send({
         message: "required parameters missing",
       });
-      return;
     }
-
     console.log("req.body: ", req.body);
     console.log("req.files: ", req.file);
 
-    bucket.upload(
-      req.file.path,
-      {
-        destination: `productPictures/${req.file.filename}`, // give destination name if you want to give a certain name to file in bucket, include date to make name unique otherwise it will replace previous file with the same name
-      },
-      function (err, file, apiResponse) {
-        if (!err) {
-          file
-            .getSignedUrl({
-              action: "read",
-              expires: "03-09-2999",
-            })
-            .then((urlData, err) => {
-              if (!err) {
-                console.log("public downloadable url: ", urlData[0]); // this is public downloadable url
+    try {
+      bucket.upload(
+        req.file.path,
+        {
+          destination: `productPictures/${req.file.filename}`, // give destination name if you want to give a certain name to file in bucket, include date to make name unique otherwise it will replace previous file with the same name
+        },
+        function (err, file, apiResponse) {
+          if (!err) {
+            file
+              .getSignedUrl({
+                action: "read",
+                expires: "03-09-2999",
+              })
+              .then((urlData, err) => {
+                if (!err) {
+                  console.log("public downloadable url: ", urlData[0]); // this is public downloadable url
 
-                try {
-                  fs.unlinkSync(req.file.path);
-                  //file removed
-                } catch (err) {
-                  console.error(err);
-                }
-                productModel.create(
-                  {
-                    name: body.name,
-                    price: body.price,
-                    quantity: body.quantity,
-                    description: body.description,
-                    pictureUrl: urlData[0],
-                  },
-                  (err, saved) => {
-                    if (!err) {
-                      console.log("saved: ", saved);
-
-                      res.send({
-                        message: "product added successfully",
-                      });
-                    } else {
-                      console.log("err: ", err);
-                      res.status(500).send({
-                        message: "server error",
-                      });
-                    }
+                  try {
+                    fs.unlinkSync(req.file.path);
+                    //file removed
+                  } catch (err) {
+                    console.error(err);
                   }
-                );
-              }
-            });
-        } else {
-          console.log("err: ", err);
-          res.status(500).send();
+                }
+              });
+          }
         }
-      }
-    );
-  } catch (error) {
-    console.log("error: ", error);
-  }
-});
+      );
 
-
-router.get(
-  "/products",
-  (req, res) => {
-    productModel.find({}, (err, data) => {
-      if (!err) {
-        res.send({
-          message: "got all products successfully",
-          data: data,
-        });
-      } else {
-        res.status(500).send({
+      const addProduct = await productModel.create({
+        name: body.name,
+        price: body.price,
+        quantity: body.quantity,
+        description: body.description,
+        pictureUrl: urlData[0],
+      });
+      if (!addProduct) {
+        return res.status(500).send({
           message: "server error",
         });
       }
-    });
+      return res.status(200).send({
+        message: "product added successfully",
+      });
+    } catch (error) {
+      console.log("get all products :: ", error);
+      return res.status(500).send({
+        message: "server error",
+      });
+    }
+  }
+);
+
+router.get(
+  "/products",
+  async (req, res) => {
+    try {
+      const allProducts = await productModel.find({});
+      res.status(200).send({
+        message: "got all products successfully",
+        data: allProducts,
+      });
+    } catch (error) {
+      console.log("get all products :: ", error);
+      return res.status(500).send({
+        message: "server error",
+      });
+    }
   },
   []
 );
 
-router.get("/product/:id", (req, res) => {
-  const id = req.params.id;
+// router.get("/product/:id", (req, res) => {
+//   const id = req.params.id;
 
-  productModel.findOne({ _id: id }, (err, data) => {
-    if (!err) {
-      if (data) {
-        res.send({
-          message: `get product by id: ${data._id} success`,
-          data: data,
-        });
-      } else {
-        res.status(404).send({
-          message: "product not found",
-        });
-      }
-    } else {
-      res.status(500).send({
+//   productModel.findOne({ _id: id }, (err, data) => {
+//     if (!err) {
+//       if (data) {
+//         res.send({
+//           message: `get product by id: ${data._id} success`,
+//           data: data,
+//         });
+//       } else {
+//         res.status(404).send({
+//           message: "product not found",
+//         });
+//       }
+//     } else {
+//       res.status(500).send({
+//         message: "server error",
+//       });
+//     }
+//   });
+// });
+
+router.delete("/product/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const deleteProduct = await productModel.deleteOne({ _id: id });
+
+    if (!deleteProduct) {
+      return res.status(500).send({
         message: "server error",
       });
     }
-  });
-});
-
-router.delete("/product/:id", (req, res) => {
-  const id = req.params.id;
-
-  productModel.deleteOne({ _id: id }, (err, deletedData) => {
-    console.log("deleted: ", deletedData);
-    if (!err) {
-      if (deletedData.deletedCount !== 0) {
-        res.send({
-          message: "Product has been deleted successfully",
-        });
-      } else {
-        res.status(404);
-        res.send({
-          message: "No Product found with this id: " + id,
-        });
-      }
-    } else {
-      res.status(500).send({
-        message: "server error",
+    if (deleteProduct.deletedCount === 0) {
+      return res.status(404).send({
+        message: "No cart found with this id: " + id,
       });
     }
-  });
+    return res.status(200).send({
+      message: "cart has been deleted successfully",
+    });
+  } catch (error) {
+    console.log("delete product :: ", error);
+    return res.status(500).send({
+      message: "server error",
+    });
+  }
 });
 
 router.put("/product/:id", async (req, res) => {
@@ -168,18 +158,18 @@ router.put("/product/:id", async (req, res) => {
   const id = req.params.id;
 
   if (!body.name || !body.price || !body.quantity || !body.description) {
-    res.status(400).send(` required parameter missing. example request body:
+    return res.status(400)
+      .send(` required parameter missing. example request body:
         {
             "name": "value",
             "price": "value",
             "quantity": "value",
             "description": "value"
         }`);
-    return;
   }
 
   try {
-    let data = await productModel
+    let updateProduct = await productModel
       .findByIdAndUpdate(
         id,
         {
@@ -192,13 +182,14 @@ router.put("/product/:id", async (req, res) => {
       )
       .exec();
 
-    console.log("updated: ", data);
+    console.log("updated: ", updateProduct);
 
-    res.send({
+    res.status(200).send({
       message: "product modified successfully",
     });
   } catch (error) {
-    res.status(500).send({
+    console.log("update product :: ", error);
+    return res.status(500).send({
       message: "server error",
     });
   }

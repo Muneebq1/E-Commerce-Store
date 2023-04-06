@@ -63,6 +63,12 @@ function UserCart() {
                     </div>
                 )
             })}
+            <div className='cart-form'>
+                <input className='cart-input' placeholder='Full Name' type="text" /> <br />
+                <input className='cart-input' placeholder='Phone Number' type="number" /><br />
+                <input className='cart-input' placeholder='Email' type="email" /> <br />
+                <input className='cart-input' placeholder='Address' type="text" />  <br />
+            </div>
             <button onClick={() => {
                 carts.map((d) => {
                     AddOrder(d)

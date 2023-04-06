@@ -16,97 +16,92 @@ router.post("/cart", async (req, res) => {
     !body.description ||
     !body.pictureUrl
   ) {
-    res.status(400).send({
+    return res.status(400).send({
       message: "required parameters missing",
     });
-    return;
   }
 
-  cartProductModel.exists({ id: body.id , owner: body.token._id }, (err, data) => {
-   
-    if (data) {
-      try {
-        res.send({
-          message: "already exist",
-        });
-      } catch (error) {
-        res.status(500).send({
-          message: "server error",
-        });
-      }
-    } else {
-      cartProductModel.create(
-        {
-          name: body.name,
-          price: body.price,
-          quantity: body.quantity,
-          order: 1,
-          id: body.id,
-          description: body.description,
-          pictureUrl: body.pictureUrl,
-          owner: new mongoose.Types.ObjectId(body.token._id)
-        },
-        (err, saved) => {
-          if (!err) {
-            // console.log(saved);
-
-            res.send({
-              message: "carts added successfully",
-            });
-          } else {
-            res.status(500).send({
-              message: "server error",
-              error: err,
-            });
-          }
-        }
-      );
+  try {
+    const cartExist = await cartProductModel.exists({
+      id: body.id,
+      owner: body.token._id,
+    });
+    if (cartExist) {
+      return res.send({
+        message: "already exist",
+      });
     }
-  });
+    cartProductModel.create({
+      name: body.name,
+      price: body.price,
+      quantity: body.quantity,
+      order: 1,
+      id: body.id,
+      description: body.description,
+      pictureUrl: body.pictureUrl,
+      owner: new mongoose.Types.ObjectId(body.token._id),
+    });
+    return res.status(200).send({
+      message: "carts added successfully",
+    });
+  } catch (error) {
+    console.log("cart creation :: ", error);
+    return res.status(500).send({
+      message: "server error",
+    });
+  }
 });
 
 router.get(
   "/carts",
-  (req, res) => {
-    const UserId = new mongoose.Types.ObjectId(req.body.token._id)
-    cartProductModel.find({owner: UserId}, (err, data) => {
-      if (!err) {
-        res.send({
-          message: "got all carts successfully",
-          data: data,
-        });
-      } else {
-        res.status(500).send({
+  async (req, res) => {
+    try {
+      const UserId = new mongoose.Types.ObjectId(req.body.token._id);
+      const carts = await cartProductModel.find({ owner: UserId });
+      if (!carts) {
+        return res.status(500).send({
           message: "server error",
         });
       }
-    });
+      return res.send({
+        message: "got all carts successfully",
+        data: carts,
+      });
+    } catch (error) {
+      console.log("get carts :: ", error);
+      return res.status(500).send({
+        message: "server error",
+      });
+    }
   },
   []
 );
 
-router.delete("/cart/:id", (req, res) => {
-  const id = req.params.id;
-
-  cartProductModel.deleteOne({ _id: id }, (err, deletedData) => {
-    console.log("deleted: ", deletedData);
-    if (!err) {
-      if (deletedData.deletedCount !== 0) {
-        res.send({
-          message: "cart has been deleted successfully",
-        });
-      } else {
-        res.status(404);
-        res.send({
-          message: "No cart found with this id: " + id,
-        });
-      }
-    } else {
-      res.status(500).send({
+router.delete("/cart/:id", async (req, res) => {
+  try {
+    const deleteCart = await cartProductModel.deleteOne(
+      { _id: id },
+      (err, deletedData)
+    );
+    if (!deleteCart) {
+      return res.status(500).send({
         message: "server error",
       });
     }
-  });
+    if (deleteCart.deletedCount === 0) {
+      return res.status(404).send({
+        message: "No cart found with this id: " + id,
+      });
+    }
+    return res.status(200).send({
+      message: "cart has been deleted successfully",
+    });
+  } catch (error) {
+    console.log("delete cart :: ", error);
+    return res.status(500).send({
+      message: "server error",
+    });
+  }
 });
 
 router.put("/cart/:id", async (req, res) => {
@@ -114,14 +109,13 @@ router.put("/cart/:id", async (req, res) => {
   const id = req.params.id;
 
   if (!body.order) {
-    res.status(400).send(` required parameter missing. example request body:
+    return res.status(400)
+      .send(` required parameter missing. example request body:
       {
         "order": "value",
 
       }`);
-    return;
   }
-
   try {
     let data = await cartProductModel
       .findByIdAndUpdate(
@@ -139,33 +133,38 @@ router.put("/cart/:id", async (req, res) => {
       message: "cart modified successfully",
     });
   } catch (error) {
-    res.status(500).send({
+    console.log("edit cart :: ", error);
+    return res.status(500).send({
       message: "server error",
     });
   }
 });
-router.delete("/carts/:owner", (req, res) => {
+
+router.delete("/carts/:owner", async (req, res) => {
   const body = req.body;
-  // const id = req.params.owner;
-  
-  cartProductModel.deleteMany({ owner: body.token._id }, (err, deletedData) => {
-    if (!err) {
-      if (deletedData.deletedCount !== 0) {
-        res.send({
-          message: "carts has been deleted successfully",
-        });
-      } else {
-        res.status(404);
-        res.send({
-          message: "No carts found with this owner: " + body.token._id,
-        });
-      }
-    } else {
-      res.status(500).send({
-        message: "server error",
+  try {
+    const deleteAllCarts = await cartProductModel.deleteMany({
+      owner: body.token._id,
+    });
+    if (!deleteAllCarts) {
+      return res.status(404).send({
+        message: "No carts found with this owner: " + body.token._id,
       });
     }
-  });
-});
+    if (deleteAllCarts.deletedCount === 0) {
+      return res.status(404).send({
+        message: "No carts found with this owner: " + body.token._id,
+      });
+    }
+    return res.status(200).send({
+      message: "cart has been deleted successfully",
+    });
 
+  } catch (error) {
+    console.log("delete All carts :: ", error);
+    return res.status(500).send({
+      message: "server error",
+    });
+  }
+});
 export default router;

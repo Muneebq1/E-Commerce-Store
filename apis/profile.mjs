@@ -17,97 +17,90 @@ const storageConfig = multer.diskStorage({
 var uploadMiddleware = multer({ storage: storageConfig });
 
 router.post("/users", uploadMiddleware.single("profilePic"), (req, res) => {
-  const UserId = new mongoose.Types.ObjectId(req.body.id)
+  const UserId = new mongoose.Types.ObjectId(req.body.id);
 
-  userModel.findOne({owner: UserId}, (err, data) => {
+  userModel.findOne({ owner: UserId }, (err, data) => {
     if (data) {
-      try {
-        res.send({
-          message: "user already exist",
-        });
-      } catch (error) {
-        res.status(500).send({
-          message: "server error",
-        });
-      }
-    } else {
+      res.send({
+        message: "user already exist",
+      });
+    }
+    try {
+      const body = req.body;
 
+      bucket.upload(
+        req.file.path,
+        {
+          destination: `ProfilePictures/${req.file.filename}`, // give destination name if you want to give a certain name to file in bucket, include date to make name unique otherwise it will replace previous file with the same name
+        },
+        function (err, file, apiResponse) {
+          if (!err) {
+            file
+              .getSignedUrl({
+                action: "read",
+                expires: "03-09-2999",
+              })
+              .then((urlData, err) => {
+                if (!err) {
+                  console.log("public downloadable url: ", urlData[0]); // this is public downloadable url
 
-  try {
-    const body = req.body;
-
-    bucket.upload(
-      req.file.path,
-      {
-        destination: `ProfilePictures/${req.file.filename}`, // give destination name if you want to give a certain name to file in bucket, include date to make name unique otherwise it will replace previous file with the same name
-      },
-      function (err, file, apiResponse) {
-        if (!err) {
-          file
-            .getSignedUrl({
-              action: "read",
-              expires: "03-09-2999",
-            })
-            .then((urlData, err) => {
-              if (!err) {
-                console.log("public downloadable url: ", urlData[0]); // this is public downloadable url
-
-                try {
-                  fs.unlinkSync(req.file.path);
-                  //file removed
-                } catch (err) {
-                  console.error(err);
-                }
-                userModel.create(
-                  {
-                    owner: body.id,
-                    profilePic: urlData[0],
-                  },
-                  (err, saved) => {
-                    if (!err) {
-                      console.log("saved: ", saved);
-
-                      res.send({
+                  try {
+                    fs.unlinkSync(req.file.path);
+                    //file removed
+                  } catch (err) {
+                    console.error(err);
+                  }
+                  userModel.create(
+                    {
+                      owner: body.id,
+                      profilePic: urlData[0],
+                    },
+                    (err, saved) => {
+                      if (err) {
+                        return res.status(500).send({
+                          message: "server error",
+                        });
+                      }
+                      return res.status(200).send({
                         message: "profile picture added successfully",
                       });
-                    } else {
-                      console.log("err: ", err);
-                      res.status(500).send({
-                        message: "server error",
-                      });
                     }
-                  }
-                );
-              }
-            });
-        } else {
-          console.log("err: ", err);
-          res.status(500).send();
+                  );
+                }
+              });
+          }
         }
-      }
-    );
-  } catch (error) {
-    console.log("error: ", error);
-  }
-  
-}});
-})
+      );
+    } catch (error) {
+      console.log("add profile :: ", error);
+      return res.status(500).send({
+        message: "server error",
+      });
+    }
+  });
+});
+
 router.get(
   "/profile",
-  (req, res) => {
-    const UserId = new mongoose.Types.ObjectId(req.body.token._id)
-    userModel.find({owner: UserId}, (err, data) => {
-      if (!err) {
-        res.send({
-          message: "got picture successfully",
-          data: data,
-        });
-      } else {
+  async (req, res) => {
+    const UserId = new mongoose.Types.ObjectId(req.body.token._id);
+    try {
+      const getProfile = await userModel.find({ owner: UserId });
+      if (!getProfile) {
         res.status(500).send({
           message: "server error",
         });
       }
-    });
+      res.status(200).send({
+        message: "got picture successfully",
+        data: getProfile,
+      });
+    } catch (error) {
+      console.log("get profile :: ", error);
+      return res.status(500).send({
+        message: "server error",
+      });
+    }
   },
   []
 );

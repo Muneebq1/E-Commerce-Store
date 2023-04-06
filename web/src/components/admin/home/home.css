@@ -1,11 +1,21 @@
+.all-products{
+    margin: 10px;
+}
 .price{
     text-align: end;
     display: flex
 }
-.post{
-    text-align: center;
-    border: 2px solid gray;
-    border-radius: 10px;
+.admin-cards {
+    float: left;
+    padding: 5px;
+    height: 370px;
     width: 280px;
-    margin: 10px;
+    margin: 8px;
+    margin-bottom: 70px;
+    margin-top: -1px;
+}
+.admin-card-img{
+    height: 150px;
+    margin-left: 18%;
+
 }
